@@ -1,0 +1,88 @@
+.mainControls {
+    background: #a3ccf4;
+    margin: 10px auto;
+    padding: 10px;
+    max-width: 500px;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    position: relative;
+
+    #chooseDate {
+        padding: 4px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .mainButton {
+        width: 100px;
+        height: 34px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 700;
+        margin: 2px;
+        transition: transform 300ms ease, background 300ms ease;
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+
+    .addDayBtn {
+        background: #EC804E;
+
+        &:hover {
+            background: rgb(194, 107, 66);
+        }
+    }
+
+    .saveToFileBtn {
+        background: #1FCBA8;
+
+        &:hover {
+            background: rgb(28, 172, 143);
+        }
+    }
+
+    input[type=file] {
+        opacity: 0;
+        position: absolute;
+        right: -2px;
+        width: 0.1px;
+        height: 0.1px;
+
+        &:focus+button {
+            outline: auto 5px -webkit-focus-ring-color;
+        }
+    }
+
+    .loadFromFileBtn {
+        background: #F6C24A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 1px;
+        box-sizing: border-box;
+
+        &:hover {
+            background: rgb(202, 161, 63);
+        }
+    }
+}
+
+/* Styles only for Firefox - start */
+@-moz-document url-prefix() {
+    ::-moz-focus-inner {
+        border: none;
+    }
+
+    input[type=file]:focus+button,
+    input:focus {
+        outline: solid 2px #4D90FE;
+        -moz-outline-radius: 4px;
+    }
+}
+
+/* Styles only for Firefox - end */
