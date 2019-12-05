@@ -1,0 +1,39 @@
+{
+  "name": "react-to-do-app",
+  "version": "1.0.0",
+  "description": "To Do App refactored with React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --output ./dist/devBundle.js --watch",
+    "build": "webpack --mode production --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ruler90/react-to-do-app.git"
+  },
+  "author": "Ruler90",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ruler90/react-to-do-app/issues"
+  },
+  "homepage": "https://github.com/Ruler90/react-to-do-app#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.1",
+    "eslint": "^6.7.2",
+    "style-loader": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
