@@ -1,20 +1,13 @@
 # To Do:
 
-- Jako pierwsze sprawdzenie dodawania list - dodałem div mainContainer jak w poprzedniej apce, ale teraz ma ID, a nie klasę, więc pamiętać o tym. Kolejne kroki:
-    - najpierw dodajemy komponenty, żeby zobaczyć, że listy i zadania generują się na podstawie statycznego state, a dopiero potem dołączę funkcje, które będą wpływały na state, bo będzie pewność, że to dobrze działa;
-    - dodanie komponentu z taskami i importowanie go do App i ToDoListst;
-    - nested destructuring - jak dostać się do danych na temat tasks?
-        - Można by było zrobić pętlę po list.tasks.length (lub for of) i jednocześnie użyć array.map jak przy generowaniu całych list -> 
+- żeby była pewność, że wszystko dobrze działa najpierw dodam komponenty, żeby zobaczyć, że listy i zadania generują się na podstawie statycznego state, a dopiero potem dołączę funkcje, które będą wpływały na state;
 
-        lists.map(list => {
-            for (let item of list.tasks) {
-                tutaj będzie renderowanie, a działa np. z console.log(item.taskContent) itp;
-            }
+- dodanie funkcji dodawania dni do App.js i przekazanie jej jako prop do MainControls i tam dodanie onClick odpowiedniemu buttonowi
 
-    - dodanie funkcji dodawania dni do App.js i przekazanie jej jako prop do MainControls i tam dodanie onClick odpowiedniemu buttonowi
-    - dodanie pierwszej wersji state, gdzie do arraya będą dodawane nowe listy i na tej podstawie będą renderowane nowe dni
+- Nadanie edytowalności spanom - muszą dodatkowo zmieniać dane w arrayu z zadaniami przy kończeniu edycji. Czy trzeba będzie dodać dwie różne funkcje? Jedną dla list i jedną dla zadań?
+Będzie też inaczej niż w poprzedniej apce - tam nowy element od razu dostawał klasę spanEdit, która wyświetlała input i chowała span, żeby można było wprowadzić od razu nazwę zadania. Tutaj nie można tak zrobić, bo przy renderowaniu wszędzie mogłyby pojawić się inputy.
 
-- Nadanie edytowalności spanom - muszą dodatkowo zmieniać dane w arrayu z zadaniami przy kończeniu edycji
+- Czy spanEdit.css importować i w ToDoLists.js i w Tasks.js czy dać do App.js?
 
 - Conditional render - dla prio i InProgress
 
@@ -27,6 +20,18 @@ https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v0.3.0 - 07.12.2019
+
+1. Usunięto ternary operator z ToDoLists - jeśli state z listami zadań w App.js jest pusty, to po prostu nic się nie wyświetli. Nie ma potrzeby pokazywania np. dodatkowego napisu, że lista jest pusta.
+
+2. Przeniesiono wszystkie style związane z Tasks.js z poprzedniej nie-Reactowej To Do App.
+
+3. Utworzono komponent Tasks.js, który odpowiada za całą budowę TaskItem i eksportowano go do komponentu ToDoLists. Tam zostały mu przekazane tasks dla każdej listy ze state, który jest w App.js. Komponent Tasks.js zwraca html dla każdego zadania i zostaje on dodany do htmla każdej listy zadań. To wszystko jest renderowane przez App.js. 
+
+++++++++++++++++++++++++
 
 ## v0.2.0 - 06.12.2019
 
