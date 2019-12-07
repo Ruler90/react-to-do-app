@@ -1,0 +1,68 @@
+.taskItem {
+    background: #a3ccf4;
+    border-radius: 4px;
+    padding: 2px;
+    margin: 5px;
+    width: 100%;
+    min-height: 20px;
+    transition: transform 300ms ease;
+    word-wrap: break-word;
+
+    &:hover {
+        transform: scale(1.03);
+    }
+}
+
+.taskControlBtns {
+    height: 25px;
+    display: flex;
+}
+
+.prioTask {
+    background: #FF5B5B;
+}
+
+.taskInProgress {
+    background: #fcc100;
+}
+
+
+.prioBtn {
+    background: #FF5B5B;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    font-weight: 700;
+
+    &:hover {
+        background: #bb2c22;
+    }
+}
+
+.taskInProgressBtn {
+    background: #fcc100;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    font-weight: 700;
+
+    &:hover {
+        background: #cc9f0c;
+    }
+}
+
+.removeTaskBtn {
+    background: #fc0000;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    /* margin-left: auto to align it to the right in case I add more buttons */
+    margin: 5px 5px 5px auto;
+    border: none;
+    border-radius: 2px;
+    font-weight: 700;
+
+    &:hover {
+        background: #d10707;
+    }
+}

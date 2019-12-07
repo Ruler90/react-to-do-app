@@ -1,0 +1,106 @@
+.ToDoList__container {
+    border-radius: 4px;
+    padding: 3px;
+    width: 200px;
+    border: 1px solid #a3ccf4;
+    min-height: 180px;
+    margin: 5px;
+    text-align: center;
+    box-sizing: border-box;
+
+    @media screen and (min-width: 310px) {
+        width: 290px;
+    }
+
+    @media screen and (max-width: 550px) {
+        width: 100%;
+    }
+
+    @media screen and (min-width: 550px) {
+        width: 48%;
+    }
+
+    @media screen and (min-width: 1150px) {
+        width: 350px;
+        flex: 0 0 auto;
+        overflow: auto;
+        max-height: 76vh;
+        scrollbar-color: #ed9b55 #a3ccf4;
+        scrollbar-width: thin;
+
+        &::-webkit-scrollbar-track,
+        main::-webkit-scrollbar-track {
+            border-radius: 5px;
+            background-color: #a3ccf4;
+        }
+
+        &::-webkit-scrollbar,
+        main::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb,
+        main::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: #ed9b55;
+        }
+    }
+}
+
+.ToDoList__nameBar {
+    color: rgb(219, 224, 226);
+    font-size: 14px;
+    font-weight: 700;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ToDoList__tasks {
+    border-radius: 4px;
+    margin: 2px;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start
+}
+
+.defaultButton {
+    height: 20px;
+    width: 25px;
+    padding: 1px;
+    border: none;
+    border-radius: 2px;
+    transition: transform 300ms ease, background 300ms ease;
+
+    &active {
+        transform: scale(0.9);
+    }
+}
+
+.removeDayButton {
+    background: #fc0000;
+    color: #fff;
+    font-weight: 700;
+    position: absolute;
+    right: 8px;
+
+    &:hover {
+        background: #d10707;
+    }
+}
+
+.addTaskButton {
+    background: #00f329;
+    font-weight: 700;
+    position: absolute;
+    left: 8px;
+
+    &:hover {
+        background: #13b92f;
+    }
+}
