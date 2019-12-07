@@ -52,11 +52,11 @@
   }
 }
 
-.mainControls .addDayBtn {
+.mainControls .addListBtn {
   background: #EC804E;
 }
 
-.mainControls .addDayBtn:hover {
+.mainControls .addListBtn:hover {
   background: #c26b42;
 }
 

@@ -1,3 +1,23 @@
+
+# Struktura state (kopia zapasowa)
+
+state = {
+    lists: [
+      {listId: 1, listName: '02.12.2019 (pon)', tasks: [
+        { taskId: 1, taskContent: 'jakieś zadanie', isPrio: false, isInProgress: false, isDragged: false },
+        { taskId: 2, taskContent: 'kolejne zadanie', isPrio: false, isInProgress: true, isDragged: false },
+        { taskId: 3, taskContent: 'jeszcze jedno zadanie', isPrio: false, isInProgress: false, isDragged: false }
+      ]},
+      {listId: 2, listName: '03.12.2019 (wt)', tasks: [
+        { taskId: 1, taskContent: 'inne zadanie', isPrio: true, isInProgress: false, isDragged: false },
+        { taskId: 2, taskContent: 'następne zadanie', isPrio: true, isInProgress: true, isDragged: false },
+        { taskId: 3, taskContent: 'inne trzecie zadanie', isPrio: false, isInProgress: true, isDragged: false }
+      ]}
+    ]
+  }
+
+###############################
+
 # To Do:
 
 - żeby była pewność, że wszystko dobrze działa najpierw dodam komponenty, żeby zobaczyć, że listy i zadania generują się na podstawie statycznego state, a dopiero potem dołączę funkcje, które będą wpływały na state;
@@ -9,9 +29,9 @@ Będzie też inaczej niż w poprzedniej apce - tam nowy element od razu dostawa�
 
 - Czy spanEdit.css importować i w ToDoLists.js i w Tasks.js czy dać do App.js?
 
-- Conditional render - dla prio i InProgress
+- Pamiętać, żeby dodać zapisywanie do do LS po każdej zakończonej zmianie
 
-- Czy uda się przygotować wersję state, w której array będzie zależny od drag'n'drop? Zmiana pozycji itemu w arrayu, może nadanie isDragged="true" konkretnemu obiektowi podczas d'n'd
+- Czy uda się przygotować wersję state, w której array będzie zależny od drag'n'drop? Zmiana pozycji itemu w arrayu, może nadanie isDragged="true" konkretnemu obiektowi podczas d'n'd. Dodałem w state isDragged = true/false - może się to przełączać przy odpowiednich elementach, jeśli to w czymś pomoże.
 
 - D'n'D in React:
 https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
@@ -20,6 +40,16 @@ https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v0.4.0 - 07.12.2019
+
+1. Dodano warunkowe renderowanie w Tasks.js uwzględniające czy task isPrio oraz isInProgress - w zależności od statusów od razu nadawana jest odpowiednia klasa elementowi (zmieniająca jego kolor). Jest tu sporo powtarzania kodu, ale nie widzę na razie możliwości, żeby to skrócić, ponieważ jednocześnie będą nadawane odpowiednie funkcje buttonom, żeby działały na właściwy element.
+
+2. Utworzono funkcję dodawania nowej listy w App.js i podpięto ją do odpowiedniego buttona w MainControls.js.
+
+3. Utworzono funkcję usuwania dowolnej listy i podpięto ją do odpowiedniego buttona w MainControls.js.
 
 ++++++++++++++++++++++++
 
