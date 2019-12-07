@@ -30,13 +30,14 @@ To Do:
 Listy i zadania oparte byłby na obiektach i arrayach i mogłyby mieć strukturę:
 
 state = {
-	lists: [
-		{listId: 1, content: '02.12.2019 (pon)', todos: [
-			{ todoId: 1, content: 'jakieś zadanie', isPrio: true, isInProgress: false }
-			{ todoId: 2, content: 'kolejne zadanie', isPrio: false, isInProgress: false }
-			{ todoId: 3, content: 'jeszcze jedno zadanie', isPrio: false, isInProgress: false }
-		]}
-	]}
+    lists: [
+      {listId: 1, listName: '02.12.2019 (pon)', tasks: [
+        { taskId: 1, taksContent: 'jakieś zadanie', isPrio: true, isInProgress: false },
+        { taskId: 2, taksContent: 'kolejne zadanie', isPrio: false, isInProgress: false },
+        { taskId: 3, taksContent: 'jeszcze jedno zadanie', isPrio: false, isInProgress: false }
+      ]}
+    ]
+  }
 
 Żeby wyciągnąć z tego dane trzeba będzie użyć destrukturyzacji (może podwójnej, żeby rozbić listy i jeszcze zadania w środku).
 Co nieco info:

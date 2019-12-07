@@ -1,0 +1,23 @@
+.editableSpan {
+    display: block;
+    margin: 15px 5px 5px 5px;
+    min-height: 22px;
+}
+
+.editableSpan:hover {
+    cursor: pointer;
+}
+
+.editableInput {
+    display: none;
+    margin: 15px 5px 5px 5px;
+    width: 96%;
+}
+
+.spanEdit .editableSpan {
+    display: none;
+}
+
+.spanEdit .editableInput {
+    display: initial;
+}

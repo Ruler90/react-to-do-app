@@ -9,6 +9,10 @@
     justify-content: space-evenly;
     position: relative;
 
+    @media screen and (max-width: 550px) {
+        max-width: 200px;
+    }
+
     #chooseDate {
         padding: 4px;
         border: none;
@@ -27,6 +31,10 @@
 
         &:active {
             transform: scale(0.9);
+        }
+
+        @media screen and (max-width: 550px) {
+            margin-top: 5px;
         }
     }
 

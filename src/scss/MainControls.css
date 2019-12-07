@@ -15,6 +15,12 @@
   position: relative;
 }
 
+@media screen and (max-width: 550px) {
+  .mainControls {
+    max-width: 200px;
+  }
+}
+
 .mainControls #chooseDate {
   padding: 4px;
   border: none;
@@ -38,6 +44,12 @@
 .mainControls .mainButton:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
+}
+
+@media screen and (max-width: 550px) {
+  .mainControls .mainButton {
+    margin-top: 5px;
+  }
 }
 
 .mainControls .addDayBtn {
