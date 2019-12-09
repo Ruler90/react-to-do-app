@@ -8,7 +8,13 @@
     cursor: pointer;
 }
 
-.editableInput {
+.editableInput--list {
+    display: none;
+    margin: 15px 5px 5px 5px;
+    width: 70%;
+}
+
+.editableInput--task {
     display: none;
     margin: 15px 5px 5px 5px;
     width: 96%;
@@ -18,6 +24,6 @@
     display: none;
 }
 
-.spanEdit .editableInput {
+.spanEdit .editableInput--list, .spanEdit .editableInput--task {
     display: initial;
 }
