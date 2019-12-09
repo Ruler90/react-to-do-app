@@ -4,14 +4,14 @@
 state = {
     lists: [
       {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], tasks: [
-        { taskId: 1, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 2, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 3, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isDragged: false }
+        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isDragged: false },
+        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isDragged: false },
+        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isDragged: false }
       ]},
       {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], tasks: [
-        { taskId: 1, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 2, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 3, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isDragged: false }
+        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isDragged: false },
+        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isDragged: false },
+        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isDragged: false }
       ]}
     ]
   }
@@ -22,11 +22,15 @@ state = {
 
 - żeby była pewność, że wszystko dobrze działa najpierw dodam komponenty, żeby zobaczyć, że listy i zadania generują się na podstawie statycznego state, a dopiero potem dołączę funkcje, które będą wpływały na state;
 
-- fn isPrio i isInProgress będą oparte na klasach. Dodawanie i usuwanie klas można przygotować na bazie fn z edycją treści zadań
+- Pamiętać, żeby dodać zapisywanie do do LS po każdej zakończonej zmianie;
 
-- Pamiętać, żeby dodać zapisywanie do do LS po każdej zakończonej zmianie
+- Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
+
+- Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
 - Czy uda się przygotować wersję state, w której array będzie zależny od drag'n'drop? Zmiana pozycji itemu w arrayu, może nadanie isDragged="true" konkretnemu obiektowi podczas d'n'd. Dodałem w state isDragged = true/false - może się to przełączać przy odpowiednich elementach, jeśli to w czymś pomoże. Może być też konieczne działanie na klasach, jak przy spanEdit.
+  - Jeśli isDragged miałoby być usunięte, to pamiętać, żeby skasować to też przy fn addTask, bo inaczej apka się wywali
+  - Jeśli isDragged miałoby być wykorzystane, to dodać to też dla list i do fn dodającej nowe listy. W razie potrzeby można to rozdzielić na listIsDragged i taskIsDragged.
 
 - D'n'D in React:
 https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
@@ -35,6 +39,27 @@ https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
 ###############################
 
 # Changelog
+
+Pozostałe funkcje (po 0.0.5 do wersji za każdą):
+- saveToLS
+- dragScroll
+- dragAndDrop
+
+++++++++++++++++++++++++
+
+## v0.8.0 - 09.12.2019
+
+1. Poprawiono fn addList, która nie zawierała dodanego ostatnio elementu odpowiadającego za klasy przypisane do listy. Bez tego apka wywalała się przy dodawaniu nowego zadania.
+
+2. Na bazie przygotowanych wcześniej fn dodano dwie nowe: prioTask oraz taskInProgress - sprawdzają one, czy task, przy którym został kliknięty button ma w state taskClasses: prioTask / taskInProgress i jeśli nie ma, to dodają, a jeśli ma, to usuwają.
+
+3. Dodano fn addTask, która dodaje nowe zadanie na konkretnej liście i od razu ustawia focus na inpucie, żeby można było wpisać treść zadania.
+
+4. Dodano fn deleteTask, która - jak nazwa wskazuje - usuwa konkretne zadanie.
+
+5. Dodano fn saveToFile, która zapisuje state apki do pliku JSON.
+
+6. Dodano fn loadFromFile, która pobiera dane z pliku JSON i przekazuje je do state.lists. Stamtąd apka pobiera dane i renderuje listę zadań.
 
 ++++++++++++++++++++++++
 
