@@ -5,12 +5,12 @@ import '../scss/spanEdit.css';
 
 
 
-const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress}) => {
+const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, dragStartHandler, dragEndHandler, dragOverHandler, dragEnterHandler, dragLeaveHandler, dropHandler}) => {
   const taskLists = lists.map(list => {
     // for every list create all tasks
     const taskItems = list.tasks.map(task => {
       return (
-        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId}>
+        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => dragStartHandler(task)} onDragEnd={() => dragEndHandler(task)} onDragOver={() => dragOverHandler(event, list, task)} onDragEnter={() => dragEnterHandler(task)} onDragLeave={() => dragLeaveHandler(list, task)} onDrop={() => dropHandler()}>
           <div className="taskControlBtns">
             <input className="defaultButton prioBtn" type="button" value="P" onClick={() => prioTask(task)} />
             <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task)} />

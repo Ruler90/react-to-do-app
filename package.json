@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development",
     "dev": "webpack --mode development --output ./dist/devBundle.js --watch",
     "build": "webpack --mode production --watch"
   },
@@ -31,10 +32,12 @@
     "eslint-plugin-react": "^7.17.0",
     "style-loader": "^1.0.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-hot-loader": "^4.12.18"
   }
 }

@@ -3,15 +3,15 @@
 
 state = {
     lists: [
-      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], tasks: [
-        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isDragged: false }
+      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
+        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
       ]},
-      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], tasks: [
-        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isDragged: false }
+      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
+        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
       ]}
     ]
   }
@@ -28,9 +28,7 @@ state = {
 
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
-- Czy uda się przygotować wersję state, w której array będzie zależny od drag'n'drop? Zmiana pozycji itemu w arrayu, może nadanie isDragged="true" konkretnemu obiektowi podczas d'n'd. Dodałem w state isDragged = true/false - może się to przełączać przy odpowiednich elementach, jeśli to w czymś pomoże. Może być też konieczne działanie na klasach, jak przy spanEdit.
-  - Jeśli isDragged miałoby być usunięte, to pamiętać, żeby skasować to też przy fn addTask, bo inaczej apka się wywali
-  - Jeśli isDragged miałoby być wykorzystane, to dodać to też dla list i do fn dodającej nowe listy. W razie potrzeby można to rozdzielić na listIsDragged i taskIsDragged.
+- Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?)
 
 - D'n'D in React:
 https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
@@ -47,7 +45,22 @@ Pozostałe funkcje (po 0.0.5 do wersji za każdą):
 
 ++++++++++++++++++++++++
 
-## v0.8.0 - 09.12.2019
+## v0.8.0 - 10.12.2019
+
+1. Fn dragAndDrop:
+  - wykorzystuję isDragged, które jest zmieniane przez poszczególne eventy - np. onDragStart jest zmieniane na true, a przy onDragEnd lub onDrop jest zmieniane na false. Na razie to są dwie identyczne fn.
+  Może dodać jeszcze jeden element do state, np. dragOver i na tej podstawie przy drop użyć slice? Jednocześnie pamiętać, że trzeba też usunąć przenoszony element z jego pierwotnego miejsca - nie będzie problemu, jeśli to będzie ta sama lista?
+  - jak będzie działać na zadaniach, to to samo trzeba zrobić dla list i przy zastosowaniu oddzielnych fn nie powinno być możliwości, żeby wrzucić coś nie w to miejsce, gdzie trzeba
+  - W obecnej postaci działa tylko przenoszenie zadań przez dragover na inne zadanie. Jeśli najedzie się na jakiś pusty element listy, to wywalają się wszystkie klasy z zadania.
+  - Do skrócenia kodu może uda się użyć czegoś z fn drop (find dla true albo false)? metoda entries dla arraya i for of loop, która może pokazać jednocześnie index elementu, po którym iterujemy
+  - jeśli nie będą używane wszystkie eventy, to usunąć zbędne z obu plików
+  - sprawdzić, czy na pewno działam na itemach z for of, a nie na właściwych elementach i czy trzeba używać całych elementów, a nie samych indexów (+ entries) i ustawiania true/false 
+  - info z zeszytu - dla przenoszenia zadań staram się połączyć handlery task i list
+  - jednak oddzielne handlery, żeby nie nakładały się klasy i działania? Np. żeby lista nie dostawała klasy z opacity, jeśli dragOver jest na tasku. I też żeby przy onDrop zrobić po prostu push do danej listy (usunąć/przekopiować połączony kod z handlerów).
+
+++++++++++++++++++++++++
+
+## v0.8.3 - 09.12.2019
 
 1. Poprawiono fn addList, która nie zawierała dodanego ostatnio elementu odpowiadającego za klasy przypisane do listy. Bez tego apka wywalała się przy dodawaniu nowego zadania.
 
