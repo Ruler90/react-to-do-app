@@ -216,11 +216,73 @@ export default class App extends Component {
 
   // Drag and drop for lists
 
+  listDragStartHandler = (listId, event) => {
+    if (event.target.classList.contains('ToDoList__container')) {
+      const newListsArray = this.state.lists.slice();
+      for (let item of newListsArray) {
+        if (item.listId === listId) {
+          item.isListDragged = true;
+          this.setState({
+            lists: newListsArray
+          });
+        }
+      }
+    }
+  }
   
+  listDragEndHandler = (list) => {
+    const newListsArray = this.state.lists.slice();
+    for (let item of newListsArray) {
+      if (item === list) {
+        item.isListDraggedOver = false;
+        this.setState({
+          lists: newListsArray
+        });
+      }
+    }
+  }
+  
+  listDragOverHandler = (event, list) => {
+    event.preventDefault();
+    const newListsArray = this.state.lists.slice();
+    for (let item of newListsArray) {
+      if (item === list) {
+        item.isListDraggedOver = true;
+        // this.setState({
+        //   lists: newListsArray
+        // });
+      }
+    }
+  }
+
+  listDragLeaveHandler = (list) => {
+    const newListsArray = this.state.lists.slice();
+    for (let item of newListsArray) {
+      if (item === list) {
+        item.isListDraggedOver = false;
+        this.setState({
+          lists: newListsArray
+        });
+      }
+    }
+  }
+  
+  listDropHandler = () => {
+    const newListsArray = this.state.lists.slice();
+    let draggedTaskWhichList, draggedTaskIndex, draggedTask, draggedOverTaskWhichList;
+    for (let [index, list] of newListsArray.entries()) {
+
+      if (list.tasks.find(el => el.isTaskDragged)) {
+        draggedTaskWhichList = index;
+        draggedTaskIndex = list.tasks.findIndex(el => el.isTaskDragged);
+        draggedTask = list.tasks.find(el => el.isTaskDragged);
+      }
+    }
+  }
 
   // Drag and drop for tasks
 
-  dragStartHandler = (task) => {
+  taskDragStartHandler = (task) => {
     const newListsArray = this.state.lists.slice();
     for (let list of newListsArray) {
       if (list.tasks.find(el => el === task)) {
@@ -233,7 +295,7 @@ export default class App extends Component {
     }
   }
 
-  dragEndHandler = (task) => {
+  taskDragEndHandler = (task) => {
     const newListsArray = this.state.lists.slice();
     for (let list of newListsArray) {
       if (list.tasks.find(el => el === task)) {
@@ -251,21 +313,10 @@ export default class App extends Component {
     }
   }
 
-  dragOverHandler = (event, list, task) => {
+  taskDragOverHandler = (event, task) => {
     event.preventDefault();
     const newListsArray = this.state.lists.slice();
     for (let item of newListsArray) {
-
-      if (item === list) {
-        item.isListDraggedOver = true;
-        if (!item.listClasses.find(el => el === 'draggedOverItem')) {
-          item.listClasses.push('draggedOverItem');
-        }
-        this.setState({
-          lists: newListsArray
-        });
-      }
-
       if (item.tasks.find(el => el === task)) {
         const whichTask = item.tasks.findIndex(el => el === task);
         if (!item.tasks[whichTask].taskClasses.find(el => el === 'draggedOverItem')) {
@@ -279,25 +330,9 @@ export default class App extends Component {
     }
   }
 
-  dragEnterHandler = (task) => {
-    
-  }
-
-  dragLeaveHandler = (list, task) => {
+  taskDragLeaveHandler = (task) => {
     const newListsArray = this.state.lists.slice();
     for (let item of newListsArray) {
-
-      if (item === list) {
-        item.isListDraggedOver = false;
-        if (item.listClasses.find(el => el === 'draggedOverItem')) {
-          const classIndexToToggle = item.listClasses.findIndex(el => el === 'draggedOverItem');
-          item.listClasses.splice(classIndexToToggle, 1);
-        }
-        this.setState({
-          lists: newListsArray
-        });
-      }
-
       if (item.tasks.find(el => el === task)) {
         const whichTask = item.tasks.findIndex(el => el === task);
         if (item.tasks[whichTask].taskClasses.find(el => el === 'draggedOverItem')) {
@@ -312,7 +347,7 @@ export default class App extends Component {
     }
   }
 
-  dropHandler = () => {
+  taskDropHandler = () => {
     const newListsArray = this.state.lists.slice();
     let draggedTaskWhichList, draggedTaskIndex, draggedTask, draggedOverTaskWhichList, draggedOverTaskIndex, draggedOverTask;
     for (let [index, list] of newListsArray.entries()) {
@@ -328,24 +363,12 @@ export default class App extends Component {
         draggedOverTaskIndex = list.tasks.findIndex(el => el.isTaskDraggedOver);
         draggedOverTask = list.tasks.find(el => el.isTaskDraggedOver);
       }
-
-      if (list.isListDraggedOver) {
-        list.isListDraggedOver = false;
-        if (list.listClasses.find(el => el === 'draggedOverItem')) {
-          const classIndexToToggle = list.listClasses.findIndex(el => el === 'draggedOverItem');
-          list.listClasses.splice(classIndexToToggle, 1);
-          // newListsArray[draggedTaskWhichList].tasks.splice(draggedTaskIndex, 1);
-          // list.tasks.push(draggedTask);
-        }
-        this.setState({
-          lists: newListsArray
-        });
-      }
     }
 
     if (draggedTaskWhichList !== draggedOverTaskWhichList || draggedTaskWhichList === draggedOverTaskWhichList && draggedTaskIndex !== draggedOverTaskIndex) {
       newListsArray[draggedTaskWhichList].tasks.splice(draggedTaskIndex, 1);
       newListsArray[draggedOverTaskWhichList].tasks.splice(draggedOverTaskIndex, 0, draggedTask);
+      newListsArray[draggedOverTaskWhichList].isListDraggedOver = false;
       draggedTask.isTaskDragged = false;
       draggedOverTask.isTaskDraggedOver = false;
       const classIndexToToggle = draggedOverTask.taskClasses.findIndex(el => el === 'draggedOverItem');
@@ -362,7 +385,17 @@ export default class App extends Component {
         <main>
           <MainControls addList={this.addList} tasksBackup={this.tasksBackup} loadFromFile={this.loadFromFile}/>
           <div className="mainContainer">
-            <ToDoLists lists={this.state.lists} deleteList={this.deleteList} listNameShowInput={this.listNameShowInput} listNameEdit={this.listNameEdit} addTask={this.addTask} deleteTask={this.deleteTask} taskContentShowInput={this.taskContentShowInput} taskContentEdit={this.taskContentEdit} prioTask={this.prioTask} taskInProgress={this.taskInProgress} dragStartHandler={this.dragStartHandler} dragEndHandler={this.dragEndHandler} dragOverHandler={this.dragOverHandler} dragEnterHandler={this.dragEnterHandler} dragLeaveHandler={this.dragLeaveHandler} dropHandler={this.dropHandler}/>
+            
+            <ToDoLists lists={this.state.lists} 
+            
+              deleteList={this.deleteList} listNameShowInput={this.listNameShowInput} listNameEdit={this.listNameEdit} 
+            
+              addTask={this.addTask} deleteTask={this.deleteTask} taskContentShowInput={this.taskContentShowInput} taskContentEdit={this.taskContentEdit} prioTask={this.prioTask} taskInProgress={this.taskInProgress} 
+            
+              listDragStartHandler={this.listDragStartHandler} listDragEndHandler={this.listDragEndHandler} listDragOverHandler={this.listDragOverHandler} listDragLeaveHandler={this.listDragLeaveHandler} listDropHandler={this.listDropHandler} 
+            
+              taskDragStartHandler={this.taskDragStartHandler} taskDragEndHandler={this.taskDragEndHandler} taskDragOverHandler={this.taskDragOverHandler} taskDragEnterHandler={this.taskDragEnterHandler} taskDragLeaveHandler={this.taskDragLeaveHandler} taskDropHandler={this.taskDropHandler}/>
+
           </div>
         </main>
       </div>

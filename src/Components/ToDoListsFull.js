@@ -5,12 +5,12 @@ import '../scss/spanEdit.css';
 
 
 
-const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, dragStartHandler, dragEndHandler, dragOverHandler, dragEnterHandler, dragLeaveHandler, dropHandler}) => {
+const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, listDropHandler, taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, taskDropHandler}) => {
   const taskLists = lists.map(list => {
     // for every list create all tasks
     const taskItems = list.tasks.map(task => {
       return (
-        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => dragStartHandler(task)} onDragEnd={() => dragEndHandler(task)} onDragOver={() => dragOverHandler(event, list, task)} onDragEnter={() => dragEnterHandler(task)} onDragLeave={() => dragLeaveHandler(list, task)} onDrop={() => dropHandler()}>
+        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => taskDragStartHandler(task)} onDragEnd={() => taskDragEndHandler(task)} onDragOver={() => taskDragOverHandler(event, task)} onDragLeave={() => taskDragLeaveHandler(task)} onDrop={() => taskDropHandler()}>
           <div className="taskControlBtns">
             <input className="defaultButton prioBtn" type="button" value="P" onClick={() => prioTask(task)} />
             <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task)} />
@@ -22,7 +22,7 @@ const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask,
       );
     });
     return (
-      <div className="ToDoList__container" draggable="true" key={list.listId}>
+      <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event)} onDragEnd={() => listDragEndHandler(list)} onDragOver={() => listDragOverHandler(event, list)} onDragLeave={() => listDragLeaveHandler(list)} onDrop={() => listDropHandler()}>
         <div className={list.listClasses.join(' ')}>
           <input type="button" className="defaultButton addTaskButton" value="+" onClick={() => addTask(list)}></input>
           <span className="editableSpan" onClick={() => listNameShowInput(list, event)}>{list.listName}</span>

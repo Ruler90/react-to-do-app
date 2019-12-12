@@ -20,18 +20,20 @@ state = {
 
 # To Do:
 
-- żeby była pewność, że wszystko dobrze działa najpierw dodam komponenty, żeby zobaczyć, że listy i zadania generują się na podstawie statycznego state, a dopiero potem dołączę funkcje, które będą wpływały na state;
-
 - Pamiętać, żeby dodać zapisywanie do do LS po każdej zakończonej zmianie;
 
 - Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
 
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
-- Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?)
+- Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?) - działa bez tego
+
+- Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy (oznaczenia to + ze strzałką w górę i + ze strzałką w dół - może być konieczna zmiana stylowania, chyba, że znajdę po jednym symbolu - jakiś plus ze strzałkami?). Jeden push do arraya, a drugi unshift?
 
 - D'n'D in React:
 https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
+
+- Żeby nie gryzło się z dragScrollem - może będzie konieczne dodanie kolejnego parametru w state lub w fn dragScroll dać if sprawdzające, czy żaden task ani lista nie ma dragged ustawionego na true.
 
 
 ###############################
@@ -45,22 +47,28 @@ Pozostałe funkcje (po 0.0.5 do wersji za każdą):
 
 ++++++++++++++++++++++++
 
-## v0.8.0 - 10.12.2019
+## v0.8.4 - 10.12.2019, 11.12.2019
 
-1. Fn dragAndDrop:
-  - wykorzystuję isDragged, które jest zmieniane przez poszczególne eventy - np. onDragStart jest zmieniane na true, a przy onDragEnd lub onDrop jest zmieniane na false. Na razie to są dwie identyczne fn.
-  Może dodać jeszcze jeden element do state, np. dragOver i na tej podstawie przy drop użyć slice? Jednocześnie pamiętać, że trzeba też usunąć przenoszony element z jego pierwotnego miejsca - nie będzie problemu, jeśli to będzie ta sama lista?
-  - jak będzie działać na zadaniach, to to samo trzeba zrobić dla list i przy zastosowaniu oddzielnych fn nie powinno być możliwości, żeby wrzucić coś nie w to miejsce, gdzie trzeba
+1. Fn dragAndDrop dla Tasks:
+  - Taski posiadają w state: isTaskDragged oraz isTaskDraggedOver (oba domyślnie false).
+  - Listy posiadając w state: isListDragged oraz isListDraggedOver (oba domyślnie false).
+  - Przy konkretnych eventach odpowiednie elementy otrzymują true przy powyższych, czyli np. przenoszone zadanie ma isTaskDragged=true, zadanie, nad którym je trzymamy ma isTaskDraggedOver=true, a lista, na której jest to zadanie ma isListDraggedOver=true.
+  - Przy onDrop zbierane są informacje o elementach (która lista, który index, jaki dokładnie element) i zapisywane do zmiennych. Potem na tej podstawie jest wykonywana metoda splice, która wycina przenoszony element z jednego miejsca i wstawia w drugim modyfikując wszystko w state. Jednocześnie wszystkie parametry isDragged i isDraggedOver są ustawiane na false.
+
+
   - W obecnej postaci działa tylko przenoszenie zadań przez dragover na inne zadanie. Jeśli najedzie się na jakiś pusty element listy, to wywalają się wszystkie klasy z zadania.
-  - Do skrócenia kodu może uda się użyć czegoś z fn drop (find dla true albo false)? metoda entries dla arraya i for of loop, która może pokazać jednocześnie index elementu, po którym iterujemy
-  - jeśli nie będą używane wszystkie eventy, to usunąć zbędne z obu plików
+
   - sprawdzić, czy na pewno działam na itemach z for of, a nie na właściwych elementach i czy trzeba używać całych elementów, a nie samych indexów (+ entries) i ustawiania true/false 
-  - info z zeszytu - dla przenoszenia zadań staram się połączyć handlery task i list
   - jednak oddzielne handlery, żeby nie nakładały się klasy i działania? Np. żeby lista nie dostawała klasy z opacity, jeśli dragOver jest na tasku. I też żeby przy onDrop zrobić po prostu push do danej listy (usunąć/przekopiować połączony kod z handlerów).
+  - przy rozdzielonych można dodać warunki, żeby działały tylko jeśli isTaskDragged oraz isListDragged. Po przeciągięciu taska na pustą listę można dać if, gdzie żaden task nie ma draggedOver i wtedy wyzwolić dodanie do listy. Ew. może trzeba to dodać w evencie onDrop dla listy
+  - żeby dobrze to wszystko rozdzielić, będzie trzeba zastosować wersję z drop dla tasków - przygotować zmienne oraz kilka if statements, które będą przypisywały wartości zmiennym. Potem ostateczny if statement, który odpali (lub nie) fn. Chodzi głównie o to, żeby nie było dwóch setState jednocześnie przy dragOver, żeby nie działało to z opóźnieniem.
+  - Dla niektórych eventów da się wykorzystać event.target.classList.contains - zwrócić uwagę na rodzaj eventu, bo np. przy drop nie jest to główny element, ale np. span czy button, ale przy dragStart łapie całość (chyba ze względu na draggable=true).
+  - Może da się skorzystać z id jak przy dragStart dla list.
+  - Ustawić takie if statements, żeby nie dało się przenieść elementów w niedozwolone miejsca (co powoduje teraz wywalenie klas dla elementu), np. dla drop if taskIsDraggedOver || listIsDraggedOver - jeśli żadne nie ma true, to wtedy fn się nie wykona.
 
 ++++++++++++++++++++++++
 
-## v0.8.3 - 09.12.2019
+## v0.8.0 - 09.12.2019
 
 1. Poprawiono fn addList, która nie zawierała dodanego ostatnio elementu odpowiadającego za klasy przypisane do listy. Bez tego apka wywalała się przy dodawaniu nowego zadania.
 
