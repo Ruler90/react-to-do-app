@@ -20,13 +20,19 @@ state = {
 
 # To Do:
 
-- Pamiętać, żeby dodać zapisywanie do do LS po każdej zakończonej zmianie;
+- Dodać zapisywanie do LS po każdej zakończonej zmianie: przy drop, po dodaniu listy, po edycji nazwy listy, po usunięciu listy, po dodaniu zadania, po edycji treści zadania, po ustawieniu statusu zadania (prio i IP), po usunięciu zadania, przy drop zadania oraz listy
 
 - Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
+
+- Można pomyśleć nad nadawaniem listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto jeszcze z tym kombinować? Listy przenosi się łatwo, a to dodatkowe generowanie dużej ilości eventów.
 
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
 - Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?) - działa bez tego
+
+- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop
+
+- Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
 - Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy (oznaczenia to + ze strzałką w górę i + ze strzałką w dół - może być konieczna zmiana stylowania, chyba, że znajdę po jednym symbolu - jakiś plus ze strzałkami?). Jeden push do arraya, a drugi unshift?
 
@@ -43,28 +49,23 @@ https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
 Pozostałe funkcje (po 0.0.5 do wersji za każdą):
 - saveToLS
 - dragScroll
-- dragAndDrop
 
 ++++++++++++++++++++++++
 
-## v0.8.4 - 10.12.2019, 11.12.2019
+## v0.9.0 - 10.12.2019, 11.12.2019, 12.12.2019
 
-1. Fn dragAndDrop dla Tasks:
+1. Fn dragAndDrop dla Tasks i Lists:
   - Taski posiadają w state: isTaskDragged oraz isTaskDraggedOver (oba domyślnie false).
   - Listy posiadając w state: isListDragged oraz isListDraggedOver (oba domyślnie false).
   - Przy konkretnych eventach odpowiednie elementy otrzymują true przy powyższych, czyli np. przenoszone zadanie ma isTaskDragged=true, zadanie, nad którym je trzymamy ma isTaskDraggedOver=true, a lista, na której jest to zadanie ma isListDraggedOver=true.
-  - Przy onDrop zbierane są informacje o elementach (która lista, który index, jaki dokładnie element) i zapisywane do zmiennych. Potem na tej podstawie jest wykonywana metoda splice, która wycina przenoszony element z jednego miejsca i wstawia w drugim modyfikując wszystko w state. Jednocześnie wszystkie parametry isDragged i isDraggedOver są ustawiane na false.
+  - Przy onDrop zbierane są informacje o elementach (która lista, który index, jaki dokładnie element) i zapisywane do zmiennych. Potem po spełnieniu warunków z określonych if statements jest wykonywana metoda splice, która wycina przenoszony element z jednego miejsca i wstawia w drugim modyfikując wszystko w state. Jednocześnie wszystkie parametry isDragged i isDraggedOver są ustawiane na false.
+  - Ostatecznie ustawiam jedną fn dropHandler, która jest połączeniem tej dla tasków i tej dla list. Dalej zbierane są informacje o stanach obiektów do zmiennych i potem na podstawie odpowiednich if statements wybierane jest odpowiednie działanie: przeniesienie taska na miejsce innego taska lub dodanie taska na końcu listy jeśli drop był na liście, a nie tasku. Jeśli będą się przenosiły po 2 zadania naraz, to if statements mają złe wykluczenia.
+  - Można też zamieniać miejscami list - nie ma znaczenia, czy lista zostanie przeniesiona na inną listę czy na task na innej liście.
+  - Jeśli task lub lista zostaną upuszczone poza obszarem jakiejkolwiek listy, to nic się nie wydarzy.
 
+- na koniec upewnić się, że wartości true/false zmieniają się we właściwych momentach
 
-  - W obecnej postaci działa tylko przenoszenie zadań przez dragover na inne zadanie. Jeśli najedzie się na jakiś pusty element listy, to wywalają się wszystkie klasy z zadania.
-
-  - sprawdzić, czy na pewno działam na itemach z for of, a nie na właściwych elementach i czy trzeba używać całych elementów, a nie samych indexów (+ entries) i ustawiania true/false 
-  - jednak oddzielne handlery, żeby nie nakładały się klasy i działania? Np. żeby lista nie dostawała klasy z opacity, jeśli dragOver jest na tasku. I też żeby przy onDrop zrobić po prostu push do danej listy (usunąć/przekopiować połączony kod z handlerów).
-  - przy rozdzielonych można dodać warunki, żeby działały tylko jeśli isTaskDragged oraz isListDragged. Po przeciągięciu taska na pustą listę można dać if, gdzie żaden task nie ma draggedOver i wtedy wyzwolić dodanie do listy. Ew. może trzeba to dodać w evencie onDrop dla listy
-  - żeby dobrze to wszystko rozdzielić, będzie trzeba zastosować wersję z drop dla tasków - przygotować zmienne oraz kilka if statements, które będą przypisywały wartości zmiennym. Potem ostateczny if statement, który odpali (lub nie) fn. Chodzi głównie o to, żeby nie było dwóch setState jednocześnie przy dragOver, żeby nie działało to z opóźnieniem.
-  - Dla niektórych eventów da się wykorzystać event.target.classList.contains - zwrócić uwagę na rodzaj eventu, bo np. przy drop nie jest to główny element, ale np. span czy button, ale przy dragStart łapie całość (chyba ze względu na draggable=true).
-  - Może da się skorzystać z id jak przy dragStart dla list.
-  - Ustawić takie if statements, żeby nie dało się przenieść elementów w niedozwolone miejsca (co powoduje teraz wywalenie klas dla elementu), np. dla drop if taskIsDraggedOver || listIsDraggedOver - jeśli żadne nie ma true, to wtedy fn się nie wykona.
+2. Zmieniłem wysokość listy ze 180px na 50px - jeśli nie ma tam zadań, to zostaje sam pasek z nazwą i buttonami dodawania/usuwania. Wygląda to lepiej niż puste pole. Dopasowałem też wysokość mainContainer i ToDoList__container do ekranu.
 
 ++++++++++++++++++++++++
 

@@ -214,14 +214,14 @@ export default class App extends Component {
     };
   }
 
-  // Drag and drop for lists
+  // Drag event handlers for lists
 
   listDragStartHandler = (listId, event) => {
     if (event.target.classList.contains('ToDoList__container')) {
       const newListsArray = this.state.lists.slice();
-      for (let item of newListsArray) {
-        if (item.listId === listId) {
-          item.isListDragged = true;
+      for (let list of newListsArray) {
+        if (list.listId === listId) {
+          list.isListDragged = true;
           this.setState({
             lists: newListsArray
           });
@@ -230,35 +230,46 @@ export default class App extends Component {
     }
   }
   
-  listDragEndHandler = (list) => {
+  listDragEndHandler = () => {
     const newListsArray = this.state.lists.slice();
-    for (let item of newListsArray) {
-      if (item === list) {
-        item.isListDraggedOver = false;
-        this.setState({
-          lists: newListsArray
-        });
+    for (let list of newListsArray) {
+      if (list.isListDragged) {
+        list.isListDragged = false;
+      }
+      if (list.isListDraggedOver) {
+        list.isListDraggedOver = false;
+      }
+      const tasks = list.tasks;
+      for (let item of tasks) {
+        if (item.isTaskDraggedOver) {
+          item.isTaskDraggedOver = false;
+        }
+        //used only when dragged task and dropped it on itself
+        if (item.taskClasses.find(el => el === 'draggedOverItem')) {
+          const classIndexToToggle = item.taskClasses.findIndex(el => el === 'draggedOverItem');
+          item.taskClasses.splice(classIndexToToggle, 1);
+        }
       }
     }
+    this.setState({
+      lists: newListsArray
+    });
   }
   
-  listDragOverHandler = (event, list) => {
+  listDragOverHandler = (event, listId) => {
     event.preventDefault();
     const newListsArray = this.state.lists.slice();
-    for (let item of newListsArray) {
-      if (item === list) {
-        item.isListDraggedOver = true;
-        // this.setState({
-        //   lists: newListsArray
-        // });
+    for (let list of newListsArray) {
+      if (list.listId === listId) {
+        list.isListDraggedOver = true;
       }
     }
   }
 
-  listDragLeaveHandler = (list) => {
+  listDragLeaveHandler = (listId) => {
     const newListsArray = this.state.lists.slice();
     for (let item of newListsArray) {
-      if (item === list) {
+      if (item.listId === listId) {
         item.isListDraggedOver = false;
         this.setState({
           lists: newListsArray
@@ -267,44 +278,73 @@ export default class App extends Component {
     }
   }
   
-  listDropHandler = () => {
-    const newListsArray = this.state.lists.slice();
-    let draggedTaskWhichList, draggedTaskIndex, draggedTask, draggedOverTaskWhichList;
-    for (let [index, list] of newListsArray.entries()) {
+  // Drag event handlers for tasks
 
-      if (list.tasks.find(el => el.isTaskDragged)) {
-        draggedTaskWhichList = index;
-        draggedTaskIndex = list.tasks.findIndex(el => el.isTaskDragged);
-        draggedTask = list.tasks.find(el => el.isTaskDragged);
-      }
-    }
-  }
-
-  // Drag and drop for tasks
-
-  taskDragStartHandler = (task) => {
+  taskDragStartHandler = (listId, taskId) => {
     const newListsArray = this.state.lists.slice();
     for (let list of newListsArray) {
-      if (list.tasks.find(el => el === task)) {
-        const whichTask = list.tasks.findIndex(el => el === task);
+      if (list.listId === listId) {
+        const whichTask = list.tasks.findIndex(el => el.taskId === taskId);
         list.tasks[whichTask].isTaskDragged = true;
-        this.setState({
-          lists: newListsArray
-        });
+      }
+    }
+    this.setState({
+      lists: newListsArray
+    });
+  }
+
+  taskDragEndHandler = () => {
+    const newListsArray = this.state.lists.slice();
+    for (let list of newListsArray) {
+      if (list.isListDraggedOver) {
+        list.isListDraggedOver = false;
+      }
+      const tasks = list.tasks;
+      for (let item of tasks) {
+        if (item.isTaskDragged) {
+          item.isTaskDragged = false;
+        }
+        if (item.isTaskDraggedOver) {
+          item.isTaskDraggedOver = false;
+        }
+        //used only when dragged task and dropped it on itself
+        if (item.taskClasses.find(el => el === 'draggedOverItem')) {
+          const classIndexToToggle = item.taskClasses.findIndex(el => el === 'draggedOverItem');
+          item.taskClasses.splice(classIndexToToggle, 1);
+        }
+      }
+    }
+    this.setState({
+      lists: newListsArray
+    });
+  }
+
+  taskDragOverHandler = (event, listId, taskId) => {
+    event.preventDefault();
+    const newListsArray = this.state.lists.slice();
+    for (let list of newListsArray) {
+      if (list.listId === listId) {
+        const whichTask = list.tasks.findIndex(el => el.taskId === taskId);
+        if (!list.tasks[whichTask].taskClasses.find(el => el === 'draggedOverItem')) {
+          list.tasks[whichTask].taskClasses.push('draggedOverItem');
+          list.tasks[whichTask].isTaskDraggedOver = true;
+          this.setState({
+            lists: newListsArray
+          });
+        }
       }
     }
   }
 
-  taskDragEndHandler = (task) => {
+  taskDragLeaveHandler = (listId, taskId) => {
     const newListsArray = this.state.lists.slice();
     for (let list of newListsArray) {
-      if (list.tasks.find(el => el === task)) {
-        const whichTask = list.tasks.findIndex(el => el === task);
-        if (list.tasks[whichTask].isTaskDragged) {
-          list.tasks[whichTask].isTaskDragged = false;
-          list.tasks[whichTask].isTaskDraggedOver = false;
+      if (list.listId === listId) {
+        const whichTask = list.tasks.findIndex(el => el.taskId === taskId);
+        if (list.tasks[whichTask].taskClasses.find(el => el === 'draggedOverItem')) {
           const classIndexToToggle = list.tasks[whichTask].taskClasses.findIndex(el => el === 'draggedOverItem');
           list.tasks[whichTask].taskClasses.splice(classIndexToToggle, 1);
+          list.tasks[whichTask].isTaskDraggedOver = false;
           this.setState({
             lists: newListsArray
           });
@@ -313,64 +353,81 @@ export default class App extends Component {
     }
   }
 
-  taskDragOverHandler = (event, task) => {
-    event.preventDefault();
-    const newListsArray = this.state.lists.slice();
-    for (let item of newListsArray) {
-      if (item.tasks.find(el => el === task)) {
-        const whichTask = item.tasks.findIndex(el => el === task);
-        if (!item.tasks[whichTask].taskClasses.find(el => el === 'draggedOverItem')) {
-          item.tasks[whichTask].taskClasses.push('draggedOverItem');
-          item.tasks[whichTask].isTaskDraggedOver = true;
-          this.setState({
-            lists: newListsArray
-          });
-        }
-      }
-    }
-  }
+  // drop event handler for lists and tasks
 
-  taskDragLeaveHandler = (task) => {
+  dropHandler = () => {
     const newListsArray = this.state.lists.slice();
-    for (let item of newListsArray) {
-      if (item.tasks.find(el => el === task)) {
-        const whichTask = item.tasks.findIndex(el => el === task);
-        if (item.tasks[whichTask].taskClasses.find(el => el === 'draggedOverItem')) {
-          const classIndexToToggle = item.tasks[whichTask].taskClasses.findIndex(el => el === 'draggedOverItem');
-          item.tasks[whichTask].taskClasses.splice(classIndexToToggle, 1);
-          item.tasks[whichTask].isTaskDraggedOver = false;
-          this.setState({
-            lists: newListsArray
-          });
-        }
-      }
-    }
-  }
-
-  taskDropHandler = () => {
-    const newListsArray = this.state.lists.slice();
-    let draggedTaskWhichList, draggedTaskIndex, draggedTask, draggedOverTaskWhichList, draggedOverTaskIndex, draggedOverTask;
+    let draggedTaskWhichList, draggedTaskIndex, draggedTaskId, draggedTask, draggedOverTaskWhichList, draggedOverTaskIndex, draggedOverTaskId, draggedOverTask, draggedList, draggedListIndex, draggedListId, draggedOverListIndex, draggedOverListId;
     for (let [index, list] of newListsArray.entries()) {
 
       if (list.tasks.find(el => el.isTaskDragged)) {
         draggedTaskWhichList = index;
         draggedTaskIndex = list.tasks.findIndex(el => el.isTaskDragged);
+        draggedTaskId = list.tasks[draggedTaskIndex].taskId;
         draggedTask = list.tasks.find(el => el.isTaskDragged);
       }
 
       if (list.tasks.find(el => el.isTaskDraggedOver)) {
         draggedOverTaskWhichList = index;
         draggedOverTaskIndex = list.tasks.findIndex(el => el.isTaskDraggedOver);
+        draggedOverTaskId = list.tasks[draggedOverTaskIndex].taskId;
         draggedOverTask = list.tasks.find(el => el.isTaskDraggedOver);
+      }
+
+      if (list.isListDraggedOver) {
+        draggedOverListIndex = index;
+        draggedOverListId = list.listId;
+      }
+
+      if (list.isListDragged) {
+        draggedListIndex = index;
+        draggedListId = list.listId;
+        draggedList = list;
       }
     }
 
-    if (draggedTaskWhichList !== draggedOverTaskWhichList || draggedTaskWhichList === draggedOverTaskWhichList && draggedTaskIndex !== draggedOverTaskIndex) {
+    // drop list on other list or on task on other list 
+    if (draggedTaskId === undefined && draggedListId !== undefined && draggedListId !== draggedOverListId ) {
+      newListsArray.splice(draggedListIndex, 1);
+      newListsArray.splice(draggedOverListIndex, 0, draggedList);
+      newListsArray[draggedListIndex].isListDragged = false;
+      newListsArray[draggedOverListIndex].isListDraggedOver = false;
+      for (let list of newListsArray) {
+        const tasks = list.tasks;
+        for (let item of tasks) {
+          if (item.isTaskDraggedOver) {
+            item.isTaskDraggedOver = false;
+          }
+          //used only when dragged task and dropped it on itself
+          if (item.taskClasses.find(el => el === 'draggedOverItem')) {
+            const classIndexToToggle = item.taskClasses.findIndex(el => el === 'draggedOverItem');
+            item.taskClasses.splice(classIndexToToggle, 1);
+          }
+        }
+      }
+      this.setState({
+        lists: newListsArray
+      });
+    }
+
+    // drop task on a list (no other task dragOver)
+    if (draggedTaskId !== undefined && draggedOverTaskId === undefined && draggedListId === undefined && draggedOverListIndex !== undefined) {
+      newListsArray[draggedTaskWhichList].tasks.splice(draggedTaskIndex, 1);
+      newListsArray[draggedOverListIndex].tasks.push(draggedTask);
+      newListsArray[draggedOverListIndex].isListDraggedOver = false;
+      draggedTask.isTaskDragged = false;
+      this.setState({
+        lists: newListsArray
+      });
+    }
+
+    // drop task on other task
+    if (draggedTaskId !== undefined && draggedOverTaskId !== undefined && draggedTaskId !== draggedOverTaskId) {
       newListsArray[draggedTaskWhichList].tasks.splice(draggedTaskIndex, 1);
       newListsArray[draggedOverTaskWhichList].tasks.splice(draggedOverTaskIndex, 0, draggedTask);
-      newListsArray[draggedOverTaskWhichList].isListDraggedOver = false;
       draggedTask.isTaskDragged = false;
       draggedOverTask.isTaskDraggedOver = false;
+      newListsArray[draggedOverTaskWhichList].isListDraggedOver = false;
       const classIndexToToggle = draggedOverTask.taskClasses.findIndex(el => el === 'draggedOverItem');
       draggedOverTask.taskClasses.splice(classIndexToToggle, 1);
       this.setState({
@@ -392,9 +449,11 @@ export default class App extends Component {
             
               addTask={this.addTask} deleteTask={this.deleteTask} taskContentShowInput={this.taskContentShowInput} taskContentEdit={this.taskContentEdit} prioTask={this.prioTask} taskInProgress={this.taskInProgress} 
             
-              listDragStartHandler={this.listDragStartHandler} listDragEndHandler={this.listDragEndHandler} listDragOverHandler={this.listDragOverHandler} listDragLeaveHandler={this.listDragLeaveHandler} listDropHandler={this.listDropHandler} 
+              listDragStartHandler={this.listDragStartHandler} listDragEndHandler={this.listDragEndHandler} listDragOverHandler={this.listDragOverHandler} listDragLeaveHandler={this.listDragLeaveHandler} 
             
-              taskDragStartHandler={this.taskDragStartHandler} taskDragEndHandler={this.taskDragEndHandler} taskDragOverHandler={this.taskDragOverHandler} taskDragEnterHandler={this.taskDragEnterHandler} taskDragLeaveHandler={this.taskDragLeaveHandler} taskDropHandler={this.taskDropHandler}/>
+              taskDragStartHandler={this.taskDragStartHandler} taskDragEndHandler={this.taskDragEndHandler} taskDragOverHandler={this.taskDragOverHandler} taskDragEnterHandler={this.taskDragEnterHandler} taskDragLeaveHandler={this.taskDragLeaveHandler} 
+              
+              dropHandler={this.dropHandler}/>
 
           </div>
         </main>
