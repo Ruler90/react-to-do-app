@@ -71,4 +71,8 @@
 .removeTaskBtn:hover {
   background: #d10707;
 }
+
+.draggedOverItem {
+  opacity: 0.6;
+}
 /*# sourceMappingURL=Tasks.css.map */

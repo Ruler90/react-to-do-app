@@ -22,5 +22,12 @@ module.exports = {
     path: path.resolve(__dirname, "dist/"),
     publicPath: "/dist/",
     filename: "prodBundle.js"
-  }
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "public/"),
+    host: '192.168.0.87',
+    port: 3000,
+    publicPath: "http://localhost:3000/dist/"
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };

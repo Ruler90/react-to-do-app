@@ -3,15 +3,15 @@
 
 state = {
     lists: [
-      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], tasks: [
-        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isDragged: false }
+      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
+        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
       ]},
-      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], tasks: [
-        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isDragged: false },
-        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isDragged: false }
+      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
+        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
       ]}
     ]
   }
@@ -20,20 +20,26 @@ state = {
 
 # To Do:
 
-- żeby była pewność, że wszystko dobrze działa najpierw dodam komponenty, żeby zobaczyć, że listy i zadania generują się na podstawie statycznego state, a dopiero potem dołączę funkcje, które będą wpływały na state;
-
-- Pamiętać, żeby dodać zapisywanie do do LS po każdej zakończonej zmianie;
+- Dodać zapisywanie do LS po każdej zakończonej zmianie: przy drop, po dodaniu listy, po edycji nazwy listy, po usunięciu listy, po dodaniu zadania, po edycji treści zadania, po ustawieniu statusu zadania (prio i IP), po usunięciu zadania, przy drop zadania oraz listy
 
 - Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
 
+- Można pomyśleć nad nadawaniem listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto jeszcze z tym kombinować? Listy przenosi się łatwo, a to dodatkowe generowanie dużej ilości eventów.
+
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
-- Czy uda się przygotować wersję state, w której array będzie zależny od drag'n'drop? Zmiana pozycji itemu w arrayu, może nadanie isDragged="true" konkretnemu obiektowi podczas d'n'd. Dodałem w state isDragged = true/false - może się to przełączać przy odpowiednich elementach, jeśli to w czymś pomoże. Może być też konieczne działanie na klasach, jak przy spanEdit.
-  - Jeśli isDragged miałoby być usunięte, to pamiętać, żeby skasować to też przy fn addTask, bo inaczej apka się wywali
-  - Jeśli isDragged miałoby być wykorzystane, to dodać to też dla list i do fn dodającej nowe listy. W razie potrzeby można to rozdzielić na listIsDragged i taskIsDragged.
+- Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?) - działa bez tego
+
+- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop
+
+- Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
+
+- Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy (oznaczenia to + ze strzałką w górę i + ze strzałką w dół - może być konieczna zmiana stylowania, chyba, że znajdę po jednym symbolu - jakiś plus ze strzałkami?). Jeden push do arraya, a drugi unshift?
 
 - D'n'D in React:
 https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
+
+- Żeby nie gryzło się z dragScrollem - może będzie konieczne dodanie kolejnego parametru w state lub w fn dragScroll dać if sprawdzające, czy żaden task ani lista nie ma dragged ustawionego na true.
 
 
 ###############################
@@ -43,7 +49,23 @@ https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
 Pozostałe funkcje (po 0.0.5 do wersji za każdą):
 - saveToLS
 - dragScroll
-- dragAndDrop
+
+++++++++++++++++++++++++
+
+## v0.9.0 - 10.12.2019, 11.12.2019, 12.12.2019
+
+1. Fn dragAndDrop dla Tasks i Lists:
+  - Taski posiadają w state: isTaskDragged oraz isTaskDraggedOver (oba domyślnie false).
+  - Listy posiadając w state: isListDragged oraz isListDraggedOver (oba domyślnie false).
+  - Przy konkretnych eventach odpowiednie elementy otrzymują true przy powyższych, czyli np. przenoszone zadanie ma isTaskDragged=true, zadanie, nad którym je trzymamy ma isTaskDraggedOver=true, a lista, na której jest to zadanie ma isListDraggedOver=true.
+  - Przy onDrop zbierane są informacje o elementach (która lista, który index, jaki dokładnie element) i zapisywane do zmiennych. Potem po spełnieniu warunków z określonych if statements jest wykonywana metoda splice, która wycina przenoszony element z jednego miejsca i wstawia w drugim modyfikując wszystko w state. Jednocześnie wszystkie parametry isDragged i isDraggedOver są ustawiane na false.
+  - Ostatecznie ustawiam jedną fn dropHandler, która jest połączeniem tej dla tasków i tej dla list. Dalej zbierane są informacje o stanach obiektów do zmiennych i potem na podstawie odpowiednich if statements wybierane jest odpowiednie działanie: przeniesienie taska na miejsce innego taska lub dodanie taska na końcu listy jeśli drop był na liście, a nie tasku. Jeśli będą się przenosiły po 2 zadania naraz, to if statements mają złe wykluczenia.
+  - Można też zamieniać miejscami list - nie ma znaczenia, czy lista zostanie przeniesiona na inną listę czy na task na innej liście.
+  - Jeśli task lub lista zostaną upuszczone poza obszarem jakiejkolwiek listy, to nic się nie wydarzy.
+
+- na koniec upewnić się, że wartości true/false zmieniają się we właściwych momentach
+
+2. Zmieniłem wysokość listy ze 180px na 50px - jeśli nie ma tam zadań, to zostaje sam pasek z nazwą i buttonami dodawania/usuwania. Wygląda to lepiej niż puste pole. Dopasowałem też wysokość mainContainer i ToDoList__container do ekranu.
 
 ++++++++++++++++++++++++
 
