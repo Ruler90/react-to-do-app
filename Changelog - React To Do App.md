@@ -52,6 +52,12 @@ Pozostałe funkcje (po 0.0.5 do wersji za każdą):
 
 ++++++++++++++++++++++++
 
+## v.0.9.5 - 13.12.2019
+
+1. Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesiona z nie-reactowej apki i importowana w index.js. Dodatkowo w App.js importowano obiekt click oraz podłączono go w dragStart dla tasków i list, żeby po zakończeniu drag'n'drop nie było możliwe poziome scrollowanie bez trzymania przycisku myszy.
+
+++++++++++++++++++++++++
+
 ## v0.9.0 - 10.12.2019, 11.12.2019, 12.12.2019
 
 1. Fn dragAndDrop dla Tasks i Lists:
@@ -62,8 +68,6 @@ Pozostałe funkcje (po 0.0.5 do wersji za każdą):
   - Ostatecznie ustawiam jedną fn dropHandler, która jest połączeniem tej dla tasków i tej dla list. Dalej zbierane są informacje o stanach obiektów do zmiennych i potem na podstawie odpowiednich if statements wybierane jest odpowiednie działanie: przeniesienie taska na miejsce innego taska lub dodanie taska na końcu listy jeśli drop był na liście, a nie tasku. Jeśli będą się przenosiły po 2 zadania naraz, to if statements mają złe wykluczenia.
   - Można też zamieniać miejscami list - nie ma znaczenia, czy lista zostanie przeniesiona na inną listę czy na task na innej liście.
   - Jeśli task lub lista zostaną upuszczone poza obszarem jakiejkolwiek listy, to nic się nie wydarzy.
-
-- na koniec upewnić się, że wartości true/false zmieniają się we właściwych momentach
 
 2. Zmieniłem wysokość listy ze 180px na 50px - jeśli nie ma tam zadań, to zostaje sam pasek z nazwą i buttonami dodawania/usuwania. Wygląda to lepiej niż puste pole. Dopasowałem też wysokość mainContainer i ToDoList__container do ekranu.
 
