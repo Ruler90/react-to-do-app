@@ -7,18 +7,7 @@ import { click } from './dragScroll.js';
 export default class App extends Component {
 
   state = {
-    lists: [
-      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
-        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
-      ]},
-      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
-        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
-      ]}
-    ]
+    lists: JSON.parse(localStorage.myReactTasks)
   }
 
   // Lists functions
@@ -40,6 +29,7 @@ export default class App extends Component {
       this.setState({
         lists: newListsArray
       });
+      localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
     }
   }
 
@@ -53,6 +43,7 @@ export default class App extends Component {
       this.setState({
         lists: newListsArray
       });
+      localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
     }
   }
 
@@ -79,6 +70,7 @@ export default class App extends Component {
       this.setState({
         lists: newListsArray
       });
+      localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
     }
   }
 
@@ -98,7 +90,9 @@ export default class App extends Component {
     this.setState({
       lists: newListsArray
     });
+    localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
     setTimeout(() => document.querySelector('.spanEdit input[type=text]').focus(), 50);
+    
   }
 
   deleteTask = (task) => {
@@ -110,6 +104,7 @@ export default class App extends Component {
         this.setState({
           lists: newListsArray
         });
+        localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
       }
     }
   }
@@ -143,6 +138,7 @@ export default class App extends Component {
           this.setState({
             lists: newListsArray
           });
+          localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
         }
       }
     }
@@ -162,6 +158,7 @@ export default class App extends Component {
         this.setState({
           lists: newListsArray
         });
+        localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
       }
     }
   }
@@ -180,6 +177,7 @@ export default class App extends Component {
         this.setState({
           lists: newListsArray
         });
+        localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
       }
     }
   }
@@ -437,6 +435,7 @@ export default class App extends Component {
         lists: newListsArray
       });
     }
+    localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
   }
 
   render () {
