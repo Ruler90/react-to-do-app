@@ -18,43 +18,47 @@ state = {
 
 ###############################
 
-# To Do:
-
-- Dodać zapisywanie do LS po każdej zakończonej zmianie: przy drop, po dodaniu listy, po edycji nazwy listy, po usunięciu listy, po dodaniu zadania, po edycji treści zadania, po ustawieniu statusu zadania (prio i IP), po usunięciu zadania, przy drop zadania oraz listy
-
-- Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
+# Pomysły na przyszłość:
 
 - Można pomyśleć nad nadawaniem listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto jeszcze z tym kombinować? Listy przenosi się łatwo, a to dodatkowe generowanie dużej ilości eventów.
+
+###############################
+
+# To Do:
+
+- Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
 
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
 - Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?) - działa bez tego
 
-- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop
+- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop. Można np. pisać oddzielnie for of loop i w środku wrzucić jedną z dwóch (lub obie) fn - kasowanie true i klas dla tasków oraz to samo dla list.
 
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
 - Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy (oznaczenia to + ze strzałką w górę i + ze strzałką w dół - może być konieczna zmiana stylowania, chyba, że znajdę po jednym symbolu - jakiś plus ze strzałkami?). Jeden push do arraya, a drugi unshift?
 
-- D'n'D in React:
-https://dev.to/roggc/how-to-make-drag-and-drop-in-react-4dje
-
-- Żeby nie gryzło się z dragScrollem - może będzie konieczne dodanie kolejnego parametru w state lub w fn dragScroll dać if sprawdzające, czy żaden task ani lista nie ma dragged ustawionego na true.
-
-
 ###############################
 
 # Changelog
 
-Pozostałe funkcje (po 0.0.5 do wersji za każdą):
-- saveToLS
-- dragScroll
+++++++++++++++++++++++++
+
+## v1.0.0 - 13.12.2019
+
+Fn saveToLS - zapisywanie i pobieranie state z Local Storage:
+- W index.js dodany skrypt przez renderem Reacta, który sprawdza, czy w LS istnieje element myReactTasks. Jeśli nie, to tworzy pusty element. Gdyby nie było żadnego, to apka w ogóle się nie wyrenderuje (nawet mainControls).
+- Funkcje apki, które zmieniają state w istotny sposób dostały
+localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
+Zapis do LS następuje po dodaniu listy, po edycji nazwy listy, po usunięciu listy, po dodaniu zadania, po edycji treści zadania, po ustawieniu statusu zadania (prio i IP), po usunięciu zadania, przy drop zadania oraz listy.
+- Nie dodawano tego przy drag eventach, ponieważ dla usera najistotniejszy jest drop, który zmieni pozycję listy lub zadania, a nie sam fakt, że element jest w trakcie przenoszenia. 
+- Tak jak poprzednio nie dodano saveToLS dla akcji wczytania listy z pliku - na wszelki wypadek, gdyby plik był błędny. Po wczytaniu pliku trzeba wykonać jakąś akcję, która wiąże się z zapisem do LS.
 
 ++++++++++++++++++++++++
 
 ## v.0.9.5 - 13.12.2019
 
-1. Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesiona z nie-reactowej apki i importowana w index.js. Dodatkowo w App.js importowano obiekt click oraz podłączono go w dragStart dla tasków i list, żeby po zakończeniu drag'n'drop nie było możliwe poziome scrollowanie bez trzymania przycisku myszy.
+Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesiona z nie-reactowej apki i importowana w index.js. Dodatkowo w App.js importowano obiekt click oraz podłączono go w dragStart dla tasków i list, żeby po zakończeniu drag'n'drop nie było możliwe poziome scrollowanie bez trzymania przycisku myszy.
 
 ++++++++++++++++++++++++
 
