@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './scss/App.css';
 import MainControls from './Components/MainControls';
 import ToDoLists from './Components/ToDoListsFull';
+import { click } from './dragScroll.js';
 
 export default class App extends Component {
 
@@ -218,6 +219,7 @@ export default class App extends Component {
 
   listDragStartHandler = (listId, event) => {
     if (event.target.classList.contains('ToDoList__container')) {
+      click.mousedown = false;
       const newListsArray = this.state.lists.slice();
       for (let list of newListsArray) {
         if (list.listId === listId) {
@@ -281,6 +283,7 @@ export default class App extends Component {
   // Drag event handlers for tasks
 
   taskDragStartHandler = (listId, taskId) => {
+    click.mousedown = false;
     const newListsArray = this.state.lists.slice();
     for (let list of newListsArray) {
       if (list.listId === listId) {
