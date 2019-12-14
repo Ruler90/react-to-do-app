@@ -1,3 +1,5 @@
+@import 'placeholder-classes';
+
 .ToDoList__container {
     border-radius: 4px;
     padding: 3px;
@@ -23,29 +25,7 @@
     @media screen and (min-width: 1150px) {
         width: 350px;
         flex: 0 0 auto;
-        overflow: auto;
         max-height: 85vh;
-        scrollbar-color: #ed9b55 #a3ccf4;
-        scrollbar-width: thin;
-
-        &::-webkit-scrollbar-track,
-        main::-webkit-scrollbar-track {
-            border-radius: 5px;
-            background-color: #a3ccf4;
-        }
-
-        &::-webkit-scrollbar,
-        main::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-            border-radius: 5px;
-        }
-
-        &::-webkit-scrollbar-thumb,
-        main::-webkit-scrollbar-thumb {
-            border-radius: 5px;
-            background-color: #ed9b55;
-        }
     }
 }
 
@@ -66,7 +46,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-content: flex-start
+    align-content: flex-start;
+
+    @extend %scrollbarStyles;
+
+    @media screen and (min-width: 1150px) {
+        overflow: auto;
+        max-height: 75vh;
+        padding: 0 2px 2px 0;
+    }
 }
 
 .defaultButton {

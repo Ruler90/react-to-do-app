@@ -20,27 +20,56 @@ state = {
 
 # Pomysły na przyszłość:
 
-- Można pomyśleć nad nadawaniem listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto jeszcze z tym kombinować? Listy przenosi się łatwo, a to dodatkowe generowanie dużej ilości eventów.
+- Nadawanie listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto z tym kombinować? Przy przenoszeniu list trudno o pomyłkę, a zabawa z klasami to dodatkowe generowanie dużej ilości eventów.
+
+- Na średnich ekranach listy układają się w dwie kolumny. Wygląda to średnio, jeśli jedna lista ma np. 2 zadania, a druga 10 -> jest wtedy sporo pustej przestrzeni. Dla średnich ekranów można dodać określoną max-height dla list i dodać im overflow, żeby pojawiał się scroll w razie potrzeby, tak jak pojawia się na dużych ekranach. Zmienić wtedy też stylowanie scrolla, bo teraz jest tylko w MQ dla dużych ekranów. Na razie nie zmieniam tego, bo nigdy nie korzystałem z listy na średnim ekranie.
+
+- Domyślnie nazwy list są krótkie (daty i dni), ale można wpisać dowolną liczbę znaków. Buttony mają position: absolute i jeśli zostanie wpisana długa nazwa, to może schować się pod buttonami. Można nadać taką width spanowi, żeby była widoczna cała nazwa. Ewentualnie można użyć innego pozycjonowania - span pośrodku, buttony dodawania po lewej, a button usuwania po prawej.
 
 ###############################
 
 # To Do:
 
-- Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu.
+- Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu. Czasami zaznaczanie działa (sprawdzone przy wpisywaniu długich nazw), ale jednocześnie może odpalać się dragScroll.
 
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
-- Pamiętać o Firefoxie (szczególnie DnD - dataTransfer?) - działa bez tego
-
 - DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop. Można np. pisać oddzielnie for of loop i w środku wrzucić jedną z dwóch (lub obie) fn - kasowanie true i klas dla tasków oraz to samo dla list.
+
+- Przenieść różne funkcje do oddzielnych plików i importować do App.js?
+
+- Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy.
+Będzie trzeba zmienić nazwy klas z addTaskButton na addTaskFirstBtn oraz addTaskLastBtn. Dla drugiego zmienić pozycję, żeby nie pokrywał się z pierwszym. Jeden push do arraya, a drugi unshift?
+Będzie trzeba też na podobnej zasadzie zmienić nazwy funkcji i istniejącą podmienić w App.js przy przekazywaniu state, a w ToDoListsFull.js dać nową nazwę w dwóch miejscach.
+
+Nazwę listy zostawić pośrodku belki czy przesunąć na środek między buttonami?
+
+Dodaj na dole:
+&#x2A71;
+
+Dodaj na górze:
+&#x02A72;
 
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
-- Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy (oznaczenia to + ze strzałką w górę i + ze strzałką w dół - może być konieczna zmiana stylowania, chyba, że znajdę po jednym symbolu - jakiś plus ze strzałkami?). Jeden push do arraya, a drugi unshift?
+
+- Rozpisać plik Readme.md
 
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v1.0.1 - 14.12.2019
+
+1. Poprawa stylowania:
+- Przeniesiono overflow i style scrollbara z ToDoList__container do ToDoList__tasks. Dzięki temu scrollują się tylko zadania, a belka z nazwą listy zostaje na swoim miejscu.
+- Dodano 2px paddingu po prawej, żeby przy hover na zadaniu nie nachodziło ono na scrollbar.
+- Dodano 2px paddingu na dole, ponieważ jeśli była mniejsza ilość zadań na liście, to przy hover na ostatnim zadaniu pojawiał się scrollbar.
+- Dodano plik _placeholder-classes.scss, w którym jest stylowanie dla scrollbara. Użyto @extend %scrollbarStyles w trzech miejscach - dla zadań, dla main oraz dodano jeszcze dla body, żeby ostylowany scrollbar pojawiał się też na średnich i mniejszych ekranach.
+
+2. Dodano screeny dla dużych, średnich i małych ekranów.
 
 ++++++++++++++++++++++++
 

@@ -1,3 +1,24 @@
+body, main {
+  scrollbar-color: #ed9b55 #a3ccf4;
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar-track, main::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #a3ccf4;
+}
+
+body::-webkit-scrollbar, main::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb, main::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #ed9b55;
+}
+
 body {
   background: #1f2b6c;
   font-family: 'Lato', sans-serif;
@@ -14,21 +35,6 @@ body {
   main {
     overflow-x: auto;
     height: 98.5vh;
-    scrollbar-color: #ed9b55 #a3ccf4;
-    scrollbar-width: thin;
-  }
-  main::-webkit-scrollbar-track {
-    border-radius: 5px;
-    background-color: #a3ccf4;
-  }
-  main::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-  }
-  main::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #ed9b55;
   }
 }
 

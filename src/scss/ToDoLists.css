@@ -1,3 +1,24 @@
+.ToDoList__tasks {
+  scrollbar-color: #ed9b55 #a3ccf4;
+  scrollbar-width: thin;
+}
+
+.ToDoList__tasks::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #a3ccf4;
+}
+
+.ToDoList__tasks::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.ToDoList__tasks::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #ed9b55;
+}
+
 .ToDoList__container {
   border-radius: 4px;
   padding: 3px;
@@ -34,26 +55,7 @@
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
-    overflow: auto;
     max-height: 85vh;
-    scrollbar-color: #ed9b55 #a3ccf4;
-    scrollbar-width: thin;
-  }
-  .ToDoList__container::-webkit-scrollbar-track,
-  .ToDoList__container main::-webkit-scrollbar-track {
-    border-radius: 5px;
-    background-color: #a3ccf4;
-  }
-  .ToDoList__container::-webkit-scrollbar,
-  .ToDoList__container main::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-  }
-  .ToDoList__container::-webkit-scrollbar-thumb,
-  .ToDoList__container main::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #ed9b55;
   }
 }
 
@@ -87,6 +89,14 @@
           justify-content: space-between;
   -ms-flex-line-pack: start;
       align-content: flex-start;
+}
+
+@media screen and (min-width: 1150px) {
+  .ToDoList__tasks {
+    overflow: auto;
+    max-height: 75vh;
+    padding: 0 2px 2px 0;
+  }
 }
 
 .defaultButton {
