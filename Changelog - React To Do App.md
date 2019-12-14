@@ -30,8 +30,6 @@ state = {
 
 # To Do:
 
-- Może na czas edycji nazwy listy lub treści zadania usuwać z elementu draggable="true" i przywracać po zakończeniu edycji? Dzięki temu powinna być możliwość zaznaczania tekstu. Czasami zaznaczanie działa (sprawdzone przy wpisywaniu długich nazw), ale jednocześnie może odpalać się dragScroll.
-
 - Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
 
 - DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop. Można np. pisać oddzielnie for of loop i w środku wrzucić jedną z dwóch (lub obie) fn - kasowanie true i klas dla tasków oraz to samo dla list.
@@ -52,12 +50,25 @@ Dodaj na górze:
 
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
-
 - Rozpisać plik Readme.md
 
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v1.0.2 - 14.12.2019
+
+1. Dodanie możliwości zaznaczania tekstu myszką w zadaniach i nazwach list:
+- Przy rozpoczęciu edycji tekstu zadania usuwane jest draggable=true z zadania oraz listy, w której się ono znajduje.
+- Po zakończeniu edycji przywracany jest ten atrybut w obu miejscach.
+- Przy rozpoczęciu edycji nazwy listy usuwane jest draggable=true z konkretnej listy.
+- Po zakończeniu edycji przywracany jest ten atrybut w konkretnej liście.
+- Dodatkowo w fn dragScroll dodano if statement ograniczający odpalanie mousedown event do kliknięcia na main oraz .mainContainer. Teraz nie da się używać dragScrolla na listach i zadaniach i jednocześnie nie jest przesuwany ekran przy zaznaczaniu tekstu.
+
+2. Poprawa styli dla ToDoList__container:
+- dodano overflow: hidden, bo przy mniejszej wysokości ekranu zadania wychodziły poza border-bottom containera.
 
 ++++++++++++++++++++++++
 

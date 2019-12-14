@@ -9,11 +9,14 @@ export function dragScroll () {
   let scrollLeft;
 
   main.addEventListener('mousedown', function (e) {
-    click.mousedown = true;
-    startX = e.pageX - main.offsetLeft;
-    scrollLeft = main.scrollLeft;
-    // user-select: none for FF, because it was selecting all text during dragScroll
-    main.setAttribute('style', 'cursor: grabbing; user-select: none');
+    // added if statement for dragScroll to fire not tasks, lists, etc. 
+    if (e.target.classList.contains('mainContainer') || e.target === main) {
+      click.mousedown = true;
+      startX = e.pageX - main.offsetLeft;
+      scrollLeft = main.scrollLeft;
+      // user-select: none for FF, because it was selecting all text during dragScroll
+      main.setAttribute('style', 'cursor: grabbing; user-select: none');
+    }
   });
 
   main.addEventListener('mouseleave', function () {

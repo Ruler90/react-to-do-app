@@ -29,6 +29,7 @@
   text-align: center;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 310px) {

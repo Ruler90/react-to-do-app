@@ -53,6 +53,7 @@ export default class App extends Component {
     newListsArray[whichList].listClasses.push('spanEdit');
     event.target.nextSibling.value = list.listName;
     setTimeout(() => event.target.nextSibling.focus(), 50);
+    event.target.closest('.ToDoList__container').removeAttribute('draggable');
     this.setState({
       lists: newListsArray
     });
@@ -67,6 +68,7 @@ export default class App extends Component {
         const classIndexToRemove = newListsArray[whichList].listClasses.findIndex(el => el === 'spanEdit');
         newListsArray[whichList].listClasses.splice(classIndexToRemove, 1);
       }
+      event.target.closest('.ToDoList__container').setAttribute('draggable', true);
       this.setState({
         lists: newListsArray
       });
@@ -115,6 +117,8 @@ export default class App extends Component {
       if (list.tasks.find(el => el === task)) {
         const whichTask = list.tasks.findIndex(el => el === task);
         list.tasks[whichTask].taskClasses.push('spanEdit');
+        event.target.closest('.taskItem').removeAttribute('draggable');
+        event.target.closest('.ToDoList__container').removeAttribute('draggable');
         event.target.nextSibling.value = task.taskContent;
         setTimeout(() => event.target.nextSibling.focus(), 50);
         this.setState({
@@ -135,6 +139,8 @@ export default class App extends Component {
             const classIndexToRemove = list.tasks[whichTask].taskClasses.findIndex(el => el === 'spanEdit');
             list.tasks[whichTask].taskClasses.splice(classIndexToRemove, 1);
           }
+          event.target.closest('.taskItem').setAttribute('draggable', true);
+          event.target.closest('.ToDoList__container').setAttribute('draggable', true);
           this.setState({
             lists: newListsArray
           });
