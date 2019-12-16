@@ -50,6 +50,8 @@ Dodaj na górze:
 
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
+- Na mobile są jakieś spore odstępu między pustymi listami zadań. Nie działa też drag'n'drop (może trzeba dodać data-transfer?).
+
 - Rozpisać plik Readme.md
 
 ###############################
