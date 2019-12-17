@@ -5,7 +5,7 @@ import '../scss/spanEdit.css';
 
 
 
-const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, dropHandler}) => {
+const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTaskFirst, addTaskLast, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, dropHandler}) => {
   const taskLists = lists.map(list => {
     // for every list create all tasks
     const taskItems = list.tasks.map(task => {
@@ -24,7 +24,8 @@ const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTask,
     return (
       <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event)} onDragEnd={() => listDragEndHandler()} onDragOver={() => listDragOverHandler(event, list.listId)} onDragLeave={() => listDragLeaveHandler(list.listId)} onDrop={() => dropHandler()}>
         <div className={list.listClasses.join(' ')}>
-          <input type="button" className="defaultButton addTaskButton" value="+" onClick={() => addTask(list)}></input>
+          <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list)}></input>
+          <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => addTaskLast(list)}></input>
           <span className="editableSpan" onClick={() => listNameShowInput(list, event)}>{list.listName}</span>
           <input type="text" className="editableInput--list" onBlur={() => listNameEdit(list, event)} onKeyPress={() => listNameEdit(list, event)}></input>
           <input type="button" className="defaultButton removeDayButton" value="X" onClick={() => deleteList(list.listId)}></input>

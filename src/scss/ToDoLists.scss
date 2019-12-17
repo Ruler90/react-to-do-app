@@ -83,13 +83,21 @@
     }
 }
 
-.addTaskButton {
+.addTaskBtn {
     background: #00f329;
     font-weight: 700;
     position: absolute;
-    left: 8px;
 
     &:hover {
         background: #13b92f;
     }
 }
+
+.addTaskBtn--first {
+    left: 8px;
+}
+
+.addTaskBtn--last {
+    left: 40px;
+}
+

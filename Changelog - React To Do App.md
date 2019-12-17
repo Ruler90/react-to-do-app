@@ -36,27 +36,24 @@ state = {
 
 - Przenieść różne funkcje do oddzielnych plików i importować do App.js?
 
-- Rozbudowa - dodanie jeszcze jednego buttona dodawania zadań - niech pierwszy dodaje zadanie na górze, a drugi na dole listy.
-Będzie trzeba zmienić nazwy klas z addTaskButton na addTaskFirstBtn oraz addTaskLastBtn. Dla drugiego zmienić pozycję, żeby nie pokrywał się z pierwszym. Jeden push do arraya, a drugi unshift?
-Będzie trzeba też na podobnej zasadzie zmienić nazwy funkcji i istniejącą podmienić w App.js przy przekazywaniu state, a w ToDoListsFull.js dać nową nazwę w dwóch miejscach.
-
-Nazwę listy zostawić pośrodku belki czy przesunąć na środek między buttonami?
-
-Dodaj na dole:
-&#x2A71;
-
-Dodaj na górze:
-&#x02A72;
-
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
-- Na mobile są jakieś spore odstępu między pustymi listami zadań. Nie działa też drag'n'drop (może trzeba dodać data-transfer?).
+- Na mobile są jakieś spore odstępu między pustymi listami zadań (czy też na Chrome). Nie działa też drag'n'drop (może trzeba dodać data-transfer?).
 
 - Rozpisać plik Readme.md
 
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v1.0.3 - 17.12.2019
+
+Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
+- Teraz jest jeden dodający zadanie na początku listy (addTaskFirst) oraz drugi - dodający zadanie na końcu (addTaskLast).
+- Dla obu buttonów zostały dodane nowe klasy css z pozycjonowaniem.
+- Buttony jako value mają ustawione znaki: &#x02A72; oraz &#x2A71; - każdy z nich jest traktowany jako 1 znak, dzięki czemu nie były wymagane żadne dodatkowe zmiany wyglądu buttonów. Jednocześnie są to najbardziej pasujące znaki, jakie znalazłem, które mogłyby wizualizować dodawanie zadania na górze i na dole.
 
 ++++++++++++++++++++++++
 

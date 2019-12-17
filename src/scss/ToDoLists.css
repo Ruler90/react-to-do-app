@@ -129,14 +129,21 @@
   background: #d10707;
 }
 
-.addTaskButton {
+.addTaskBtn {
   background: #00f329;
   font-weight: 700;
   position: absolute;
+}
+
+.addTaskBtn:hover {
+  background: #13b92f;
+}
+
+.addTaskBtn--first {
   left: 8px;
 }
 
-.addTaskButton:hover {
-  background: #13b92f;
+.addTaskBtn--last {
+  left: 40px;
 }
 /*# sourceMappingURL=ToDoLists.css.map */

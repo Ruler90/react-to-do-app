@@ -78,7 +78,25 @@ export default class App extends Component {
 
   // Tasks functions
 
-  addTask = (list) => {
+  addTaskFirst = (list) => {
+    const newTask = {
+      taskId: new Date().getTime(),
+      taskContent: '',
+      taskClasses: ['taskItem', 'spanEdit'],
+      isTaskDragged: false,
+      isTaskDraggedOver: false
+    };
+    const newListsArray = this.state.lists.slice();
+    const whichList = newListsArray.findIndex(el => el === list);
+    newListsArray[whichList].tasks.unshift(newTask);
+    this.setState({
+      lists: newListsArray
+    });
+    localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
+    setTimeout(() => document.querySelector('.spanEdit input[type=text]').focus(), 50);
+  }
+
+  addTaskLast = (list) => {
     const newTask = {
       taskId: new Date().getTime(),
       taskContent: '',
@@ -94,7 +112,6 @@ export default class App extends Component {
     });
     localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
     setTimeout(() => document.querySelector('.spanEdit input[type=text]').focus(), 50);
-    
   }
 
   deleteTask = (task) => {
@@ -455,7 +472,7 @@ export default class App extends Component {
             
               deleteList={this.deleteList} listNameShowInput={this.listNameShowInput} listNameEdit={this.listNameEdit} 
             
-              addTask={this.addTask} deleteTask={this.deleteTask} taskContentShowInput={this.taskContentShowInput} taskContentEdit={this.taskContentEdit} prioTask={this.prioTask} taskInProgress={this.taskInProgress} 
+              addTaskFirst={this.addTaskFirst} addTaskLast={this.addTaskLast} deleteTask={this.deleteTask} taskContentShowInput={this.taskContentShowInput} taskContentEdit={this.taskContentEdit} prioTask={this.prioTask} taskInProgress={this.taskInProgress} 
             
               listDragStartHandler={this.listDragStartHandler} listDragEndHandler={this.listDragEndHandler} listDragOverHandler={this.listDragOverHandler} listDragLeaveHandler={this.listDragLeaveHandler} 
             
