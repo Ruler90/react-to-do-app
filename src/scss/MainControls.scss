@@ -13,6 +13,11 @@
         max-width: 200px;
     }
 
+    @media screen and (min-width: 1150px) {
+        position: sticky;
+        left: 33%;
+    }
+
     #chooseDate {
         padding: 4px;
         border: none;

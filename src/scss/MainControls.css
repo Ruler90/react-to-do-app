@@ -21,6 +21,14 @@
   }
 }
 
+@media screen and (min-width: 1150px) {
+  .mainControls {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 33%;
+  }
+}
+
 .mainControls #chooseDate {
   padding: 4px;
   border: none;

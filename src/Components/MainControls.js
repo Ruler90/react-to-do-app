@@ -7,11 +7,11 @@ export default class MainControls extends Component {
     return (
       <div className="mainControls">
         <input type="date" id="chooseDate"></input>
-        <input type="button" className="mainButton addListBtn" value="Dodaj listę" onClick={() => {this.props.addList()}}></input>
-        <input type="button" className="mainButton saveToFileBtn" value="Save to File" onClick={() => {this.props.tasksBackup()}}></input>
+        <input type="button" className="mainButton addListBtn" value="Add list" onClick={() => {this.props.addList()}}></input>
+        <input type="button" className="mainButton saveToFileBtn" value="Save to file" onClick={() => {this.props.tasksBackup()}}></input>
         <input type="file" name="getFile" id="fileInput" accept="application/json" onChange={() => {this.props.loadFromFile(event);}}></input>
         <button tabIndex="-1" className="mainButton loadFromFileBtn"><label htmlFor="fileInput">Load from
-                File</label></button>
+                file</label></button>
       </div>
     );
   }

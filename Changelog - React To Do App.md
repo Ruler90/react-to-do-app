@@ -30,21 +30,35 @@ state = {
 
 # To Do:
 
-- Może niech dla dużych ekranów mainControls ma position: sticky/fixed przy lewej krawędzi okna (o ile nie będzie to wyglądało dziwnie).
+- Redux dla wspólnego state i wtedy ponownie rozdzielić komponent ToDoLists oraz Tasks.
 
-- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop. Można np. pisać oddzielnie for of loop i w środku wrzucić jedną z dwóch (lub obie) fn - kasowanie true i klas dla tasków oraz to samo dla list.
+- W zwykłych funkcjach taskId i listId zamiast całych tasks i lists?
+
+- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop. Można np. pisać oddzielnie for of loop i w środku wrzucić jedną z dwóch (lub obie) fn - kasowanie true i klas dla tasków oraz to samo dla list. Pamiętać, że jeśli fn ma jakieś zmienne, które będą używane w kolejnej fn to może nie być możliwości, żeby je przekazać.
 
 - Przenieść różne funkcje do oddzielnych plików i importować do App.js?
 
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
-
-- Na mobile są jakieś spore odstępu między pustymi listami zadań (czy też na Chrome). Nie działa też drag'n'drop (może trzeba dodać data-transfer?).
 
 - Rozpisać plik Readme.md
 
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v1.0.4 - 17.12.2019
+
+1. Poprawiono stylowanie dla mobile - między pustymi listami nie ma już pustej przestrzeni.
+
+2. Dla dużych ekranów dodano position: sticky dla MainControls - teraz przy poziomym scrollu będzie zawsze widać ten element.
+
+3. Żeby drag and drop działał też w mobilnych przeglądarkach, dla list i tasków dodano do dragStartHandlerów kolejno: 
+event.dataTransfer.setData('text', listId);
+event.dataTransfer.setData('text', taskId);
+
+4. Dla zaoszczędzenia kilku linii kodu utworzono klasę NewTask w pliku ToDoListsFull.js oraz importowano ją w pliku App.js. Klasa jest wykorzystywana przy tworzeniu nowych zadań z domyślnymi wartościami. Wcześniej była to część fn AddTask, ale po dodaniu drugiego buttona, było to pisanie dwa razy tego samego fragmentu kodu. Utworzenie klasy było konieczne, ponieważ po wrzuceniu samego NewTask do App.js data była pobierana w momencie renderowania apki i potem wyrzucało błędy, że są tworzone zadania o takich samych keys (keys są pobierane z taskId, które jest właśnie datą w milisekundach).
 
 ++++++++++++++++++++++++
 
@@ -86,7 +100,7 @@ Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 ## v1.0.0 - 13.12.2019
 
 Fn saveToLS - zapisywanie i pobieranie state z Local Storage:
-- W index.js dodany skrypt przez renderem Reacta, który sprawdza, czy w LS istnieje element myReactTasks. Jeśli nie, to tworzy pusty element. Gdyby nie było żadnego, to apka w ogóle się nie wyrenderuje (nawet mainControls).
+- W index.js dodany skrypt przez renderem Reacta, który sprawdza, czy w LS istnieje element myReactTasks. Jeśli nie, to tworzy pusty element. Gdyby nie było żadnego, to apka w ogóle się nie wyrenderuje (nawet MainControls).
 - Funkcje apki, które zmieniają state w istotny sposób dostały
 localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
 Zapis do LS następuje po dodaniu listy, po edycji nazwy listy, po usunięciu listy, po dodaniu zadania, po edycji treści zadania, po ustawieniu statusu zadania (prio i IP), po usunięciu zadania, przy drop zadania oraz listy.

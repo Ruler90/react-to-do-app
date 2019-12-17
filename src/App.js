@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './scss/App.css';
 import MainControls from './Components/MainControls';
-import ToDoLists from './Components/ToDoListsFull';
+import ToDoLists, { NewTask } from './Components/ToDoListsFull';
 import { click } from './dragScroll.js';
 
 export default class App extends Component {
@@ -79,16 +79,9 @@ export default class App extends Component {
   // Tasks functions
 
   addTaskFirst = (list) => {
-    const newTask = {
-      taskId: new Date().getTime(),
-      taskContent: '',
-      taskClasses: ['taskItem', 'spanEdit'],
-      isTaskDragged: false,
-      isTaskDraggedOver: false
-    };
     const newListsArray = this.state.lists.slice();
     const whichList = newListsArray.findIndex(el => el === list);
-    newListsArray[whichList].tasks.unshift(newTask);
+    newListsArray[whichList].tasks.unshift(new NewTask);
     this.setState({
       lists: newListsArray
     });
@@ -97,16 +90,9 @@ export default class App extends Component {
   }
 
   addTaskLast = (list) => {
-    const newTask = {
-      taskId: new Date().getTime(),
-      taskContent: '',
-      taskClasses: ['taskItem', 'spanEdit'],
-      isTaskDragged: false,
-      isTaskDraggedOver: false
-    };
     const newListsArray = this.state.lists.slice();
     const whichList = newListsArray.findIndex(el => el === list);
-    newListsArray[whichList].tasks.push(newTask);
+    newListsArray[whichList].tasks.push(new NewTask);
     this.setState({
       lists: newListsArray
     });
@@ -241,6 +227,7 @@ export default class App extends Component {
   listDragStartHandler = (listId, event) => {
     if (event.target.classList.contains('ToDoList__container')) {
       click.mousedown = false;
+      event.dataTransfer.setData('text', listId);
       const newListsArray = this.state.lists.slice();
       for (let list of newListsArray) {
         if (list.listId === listId) {
@@ -303,8 +290,9 @@ export default class App extends Component {
   
   // Drag event handlers for tasks
 
-  taskDragStartHandler = (listId, taskId) => {
+  taskDragStartHandler = (listId, taskId, event) => {
     click.mousedown = false;
+    event.dataTransfer.setData('text', taskId);
     const newListsArray = this.state.lists.slice();
     for (let list of newListsArray) {
       if (list.listId === listId) {

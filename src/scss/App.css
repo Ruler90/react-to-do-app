@@ -42,7 +42,6 @@ body {
   margin: 0 auto;
   border-radius: 4px;
   min-width: 250px;
-  height: 84vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -53,7 +52,7 @@ body {
           align-items: flex-start;
 }
 
-@media screen and (min-width: 550px) {
+@media screen and (max-width: 1149px) {
   .mainContainer {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
@@ -64,6 +63,7 @@ body {
   .mainContainer {
     -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
+    height: 85vh;
   }
 }
 /*# sourceMappingURL=App.css.map */

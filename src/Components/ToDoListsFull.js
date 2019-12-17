@@ -3,6 +3,13 @@ import '../scss/ToDoLists.css';
 import '../scss/Tasks.css';
 import '../scss/spanEdit.css';
 
+export class NewTask {
+  taskId = new Date().getTime();
+  taskContent = '';
+  taskClasses = ['taskItem', 'spanEdit'];
+  isTaskDragged = false;
+  isTaskDraggedOver = false;
+}
 
 
 const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTaskFirst, addTaskLast, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, dropHandler}) => {
@@ -10,7 +17,7 @@ const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTaskF
     // for every list create all tasks
     const taskItems = list.tasks.map(task => {
       return (
-        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => taskDragStartHandler(list.listId, task.taskId)} onDragEnd={() => taskDragEndHandler()} onDragOver={() => taskDragOverHandler(event, list.listId, task.taskId)} onDragLeave={() => taskDragLeaveHandler(list.listId, task.taskId)} onDrop={() => dropHandler()}>
+        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => taskDragStartHandler(list.listId, task.taskId, event)} onDragEnd={() => taskDragEndHandler()} onDragOver={() => taskDragOverHandler(event, list.listId, task.taskId)} onDragLeave={() => taskDragLeaveHandler(list.listId, task.taskId)} onDrop={() => dropHandler()}>
           <div className="taskControlBtns">
             <input className="defaultButton prioBtn" type="button" value="P" onClick={() => prioTask(task)} />
             <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task)} />

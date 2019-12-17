@@ -24,16 +24,16 @@ main {
   margin: 0 auto;
   border-radius: 4px;
   min-width: 250px;
-  height: 84vh;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
 
-  @media screen and (min-width: 550px) {
+  @media screen and (max-width: 1149px) {
     flex-wrap: wrap;
   }
 
   @media screen and (min-width: 1150px) {
     flex-wrap: nowrap;
+    height: 85vh;
   }
 }
