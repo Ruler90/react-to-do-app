@@ -32,19 +32,21 @@ state = {
 
 - Redux dla wspólnego state i wtedy ponownie rozdzielić komponent ToDoLists oraz Tasks.
 
-- W zwykłych funkcjach taskId i listId zamiast całych tasks i lists?
-
-- DRY - wrzucić w oddzielne fn powtarzające się fragmenty kodu, np. czyszczenie true i czyszczenie klasy z opacity 0.6 przy dragEnd i drop. Można np. pisać oddzielnie for of loop i w środku wrzucić jedną z dwóch (lub obie) fn - kasowanie true i klas dla tasków oraz to samo dla list. Pamiętać, że jeśli fn ma jakieś zmienne, które będą używane w kolejnej fn to może nie być możliwości, żeby je przekazać.
-
 - Przenieść różne funkcje do oddzielnych plików i importować do App.js?
 
 - Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
 
-- Rozpisać plik Readme.md
-
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v1.0.5 - 19.12.2019
+
+1. Użyto spread operatora z props w ToDoListsFull.js zamiast wypisywania wszystkich props pojedynczo. Dodano też 'props.' do wszystkich fn w tym pliku.
+
+2. Opisano apkę w pliku readme.
 
 ++++++++++++++++++++++++
 

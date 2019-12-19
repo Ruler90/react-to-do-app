@@ -12,30 +12,30 @@ export class NewTask {
 }
 
 
-const ToDoLists = ({lists, deleteList, listNameShowInput, listNameEdit, addTaskFirst, addTaskLast, deleteTask, taskContentShowInput, taskContentEdit, prioTask, taskInProgress, listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, dropHandler}) => {
+const ToDoLists = ({lists, ...props}) => {
   const taskLists = lists.map(list => {
     // for every list create all tasks
     const taskItems = list.tasks.map(task => {
       return (
-        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => taskDragStartHandler(list.listId, task.taskId, event)} onDragEnd={() => taskDragEndHandler()} onDragOver={() => taskDragOverHandler(event, list.listId, task.taskId)} onDragLeave={() => taskDragLeaveHandler(list.listId, task.taskId)} onDrop={() => dropHandler()}>
+        <div className={task.taskClasses.join(' ')} draggable="true" key={task.taskId} onDragStart={() => props.taskDragStartHandler(list.listId, task.taskId, event)} onDragEnd={() => props.taskDragEndHandler()} onDragOver={() => props.taskDragOverHandler(event, list.listId, task.taskId)} onDragLeave={() => props.taskDragLeaveHandler(list.listId, task.taskId)} onDrop={() => props.dropHandler()}>
           <div className="taskControlBtns">
-            <input className="defaultButton prioBtn" type="button" value="P" onClick={() => prioTask(task)} />
-            <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task)} />
-            <input className="defaultButton removeTaskBtn" type="button" value="X" onClick={() => deleteTask(task)} />
+            <input className="defaultButton prioBtn" type="button" value="P" onClick={() => props.prioTask(task)} />
+            <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => props.taskInProgress(task)} />
+            <input className="defaultButton removeTaskBtn" type="button" value="X" onClick={() => props.deleteTask(task)} />
           </div>
-          <span className="editableSpan" onClick={() => taskContentShowInput(task, event)}>{task.taskContent}</span>
-          <input type="text" className="editableInput--task" onBlur={() => taskContentEdit(task, event)} onKeyPress={() => taskContentEdit(task, event)}/>
+          <span className="editableSpan" onClick={() => props.taskContentShowInput(task, event)}>{task.taskContent}</span>
+          <input type="text" className="editableInput--task" onBlur={() => props.taskContentEdit(task, event)} onKeyPress={() => props.taskContentEdit(task, event)}/>
         </div>
       );
     });
     return (
-      <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event)} onDragEnd={() => listDragEndHandler()} onDragOver={() => listDragOverHandler(event, list.listId)} onDragLeave={() => listDragLeaveHandler(list.listId)} onDrop={() => dropHandler()}>
+      <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => props.listDragStartHandler(list.listId, event)} onDragEnd={() => props.listDragEndHandler()} onDragOver={() => props.listDragOverHandler(event, list.listId)} onDragLeave={() => props.listDragLeaveHandler(list.listId)} onDrop={() => props.dropHandler()}>
         <div className={list.listClasses.join(' ')}>
-          <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list)}></input>
-          <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => addTaskLast(list)}></input>
-          <span className="editableSpan" onClick={() => listNameShowInput(list, event)}>{list.listName}</span>
-          <input type="text" className="editableInput--list" onBlur={() => listNameEdit(list, event)} onKeyPress={() => listNameEdit(list, event)}></input>
-          <input type="button" className="defaultButton removeDayButton" value="X" onClick={() => deleteList(list.listId)}></input>
+          <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => props.addTaskFirst(list)}></input>
+          <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => props.addTaskLast(list)}></input>
+          <span className="editableSpan" onClick={() => props.listNameShowInput(list, event)}>{list.listName}</span>
+          <input type="text" className="editableInput--list" onBlur={() => props.listNameEdit(list, event)} onKeyPress={() => props.listNameEdit(list, event)}></input>
+          <input type="button" className="defaultButton removeDayButton" value="X" onClick={() => props.deleteList(list.listId)}></input>
         </div>
         
         <div className="ToDoList__tasks">
