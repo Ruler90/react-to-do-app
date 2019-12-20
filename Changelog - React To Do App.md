@@ -42,6 +42,12 @@ state = {
 
 ++++++++++++++++++++++++
 
+## v1.0.6 - 20.12.2019
+
+Dodano overflow-x: hidden dla taskItem - jeśli będzie bardzo długie słowo w nazwie zadania (lub link itp), to nie będzie pojawiał się poziomy scroll.
+
+++++++++++++++++++++++++
+
 ## v1.0.5 - 19.12.2019
 
 1. Użyto spread operatora z props w ToDoListsFull.js zamiast wypisywania wszystkich props pojedynczo. Dodano też 'props.' do wszystkich fn w tym pliku.
