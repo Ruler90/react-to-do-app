@@ -23,8 +23,8 @@
         width: 48%;
     }
 
-    @media screen and (min-width: 1150px) {
-        width: 350px;
+    @media screen and (min-width: 960px) {
+        width: 315px;
         flex: 0 0 auto;
         max-height: 85vh;
     }
@@ -32,12 +32,15 @@
 
 .ToDoList__nameBar {
     color: rgb(219, 224, 226);
-    font-size: 14px;
     font-weight: 700;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .editableSpan {
+        font-size: 14px;
+    }
 }
 
 .ToDoList__tasks {
@@ -51,16 +54,22 @@
 
     @extend %scrollbarStyles;
 
-    @media screen and (min-width: 1150px) {
+    @media screen and (min-width: 960px) {
         overflow: auto;
-        max-height: 75vh;
+        max-height: 65vh;
         padding: 0 2px 2px 0;
+    }
+
+    @media screen and (min-width: 1150px) {
+        max-height: 75vh;
     }
 }
 
 .defaultButton {
-    height: 20px;
-    width: 25px;
+    height: 22px;
+    width: 22px;
+    font-weight: 700;
+    font-size: 12px;
     padding: 1px;
     border: none;
     border-radius: 2px;
@@ -74,7 +83,6 @@
 .removeDayButton {
     background: #fc0000;
     color: #fff;
-    font-weight: 700;
     position: absolute;
     right: 8px;
 
@@ -85,7 +93,6 @@
 
 .addTaskBtn {
     background: #00f329;
-    font-weight: 700;
     position: absolute;
 
     &:hover {
@@ -100,4 +107,3 @@
 .addTaskBtn--last {
     left: 40px;
 }
-

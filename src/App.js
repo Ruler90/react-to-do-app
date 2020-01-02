@@ -14,7 +14,7 @@ export default class App extends Component {
 
   addList = () => {
     const dateInput = document.querySelector('#chooseDate').value;
-    const dayName = ['nd', 'pon', 'wt', 'śr', 'czw', 'pt', 'sob'];
+    const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     if (dateInput !== '' && dateInput !== undefined) {
       const realDate = new Date(dateInput);
       const list = {
@@ -34,7 +34,7 @@ export default class App extends Component {
   }
 
   deleteList = (listId) => {
-    if (confirm('Usunąć cały dzień?')) {
+    if (confirm('Remove entire day?')) {
       const newListsArray = this.state.lists.filter(item => {
         return (
           item.listId !== listId

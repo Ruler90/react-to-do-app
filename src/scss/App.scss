@@ -5,8 +5,9 @@ body {
   font-family: 'Lato', sans-serif;
   font-size: 13px;
   @extend %scrollbarStyles;
-
-  @media screen and (min-width: 1150px) {
+  
+  @media screen and (min-width: 960px) {
+    overflow-y: hidden;
     margin-bottom: 0;
   }
 }
@@ -14,10 +15,15 @@ body {
 main {
   @extend %scrollbarStyles;
 
-  @media screen and (min-width: 1150px) {
+  @media screen and (min-width: 960px) {
     overflow-x: auto;
-    height: 98.5vh;
+    overflow-y: hidden;
+    height: 97.5vh;
   }
+
+  @media screen and (min-width: 1150px) {
+    height: 98.5vh;
+  }  
 }
 
 .mainContainer {
@@ -28,11 +34,7 @@ main {
   flex-wrap: wrap;
   align-items: flex-start;
 
-  @media screen and (max-width: 1149px) {
-    flex-wrap: wrap;
-  }
-
-  @media screen and (min-width: 1150px) {
+  @media screen and (min-width: 960px) {
     flex-wrap: nowrap;
     height: 85vh;
   }

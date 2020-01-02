@@ -50,9 +50,9 @@
   }
 }
 
-@media screen and (min-width: 1150px) {
+@media screen and (min-width: 960px) {
   .ToDoList__container {
-    width: 350px;
+    width: 315px;
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
@@ -62,7 +62,6 @@
 
 .ToDoList__nameBar {
   color: #dbe0e2;
-  font-size: 14px;
   font-weight: 700;
   position: relative;
   display: -webkit-box;
@@ -74,6 +73,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.ToDoList__nameBar .editableSpan {
+  font-size: 14px;
 }
 
 .ToDoList__tasks {
@@ -92,17 +95,25 @@
       align-content: flex-start;
 }
 
-@media screen and (min-width: 1150px) {
+@media screen and (min-width: 960px) {
   .ToDoList__tasks {
     overflow: auto;
-    max-height: 75vh;
+    max-height: 65vh;
     padding: 0 2px 2px 0;
   }
 }
 
+@media screen and (min-width: 1150px) {
+  .ToDoList__tasks {
+    max-height: 75vh;
+  }
+}
+
 .defaultButton {
-  height: 20px;
-  width: 25px;
+  height: 22px;
+  width: 22px;
+  font-weight: 700;
+  font-size: 12px;
   padding: 1px;
   border: none;
   border-radius: 2px;
@@ -120,7 +131,6 @@
 .removeDayButton {
   background: #fc0000;
   color: #fff;
-  font-weight: 700;
   position: absolute;
   right: 8px;
 }
@@ -131,7 +141,6 @@
 
 .addTaskBtn {
   background: #00f329;
-  font-weight: 700;
   position: absolute;
 }
 

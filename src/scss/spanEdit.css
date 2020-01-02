@@ -1,7 +1,7 @@
 .editableSpan {
     display: block;
     margin: 15px 5px 5px 5px;
-    min-height: 22px;
+    min-height: 20px;
 }
 
 .editableSpan:hover {
@@ -11,13 +11,14 @@
 .editableInput--list {
     display: none;
     margin: 15px 5px 5px 5px;
-    width: 55%;
+    width: 50%;
 }
 
 .editableInput--task {
     display: none;
     margin: 15px 5px 5px 5px;
     width: 96%;
+    font-size: 12px;
 }
 
 .spanEdit .editableSpan {
