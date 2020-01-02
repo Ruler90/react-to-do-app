@@ -25,15 +25,23 @@ body {
   font-size: 13px;
 }
 
-@media screen and (min-width: 1150px) {
+@media screen and (min-width: 960px) {
   body {
+    overflow-y: hidden;
     margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  main {
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 97.5vh;
   }
 }
 
 @media screen and (min-width: 1150px) {
   main {
-    overflow-x: auto;
     height: 98.5vh;
   }
 }
@@ -52,14 +60,7 @@ body {
           align-items: flex-start;
 }
 
-@media screen and (max-width: 1149px) {
-  .mainContainer {
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
-}
-
-@media screen and (min-width: 1150px) {
+@media screen and (min-width: 960px) {
   .mainContainer {
     -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;

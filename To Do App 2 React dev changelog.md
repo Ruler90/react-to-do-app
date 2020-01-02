@@ -18,7 +18,7 @@ state = {
 
 ###############################
 
-# Pomysły na przyszłość:
+# Pomysły na przyszłość / uwagi:
 
 - Nadawanie listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto z tym kombinować? Przy przenoszeniu list trudno o pomyłkę, a zabawa z klasami to dodatkowe generowanie dużej ilości eventów.
 
@@ -39,6 +39,18 @@ state = {
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+## v1.0.7 - 02.01.2019
+
+1. Zmiana styli:
+- Widok z poziomym scrollem mają teraz też ekrany 10 cali.
+- Przez większość czasu apka jest używana na ekranie 13 i 15 cali z rozdzielczością 1920x1080 oraz zoomem 90%. Dlatego zmniejszono większość elementów o około 10%, żeby mieć taki widok z domyślnym wyświetlaniem 100%.
+
+2. Zmiana języka na angielski (dni tygodnia, pytanie o usunięcie całego dnia).
+
+3. Zmiana nazwy buttona z 'Load from file' na 'Load file'.
 
 ++++++++++++++++++++++++
 
