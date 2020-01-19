@@ -42,7 +42,7 @@ state = {
 
 ++++++++++++++++++++++++
 
-## v1.0.7 - 02.01.2019
+### v1.0.7 - 02.01.2019
 
 1. Zmiana styli:
 - Widok z poziomym scrollem mają teraz też ekrany 10 cali.
@@ -54,13 +54,13 @@ state = {
 
 ++++++++++++++++++++++++
 
-## v1.0.6 - 20.12.2019
+### v1.0.6 - 20.12.2019
 
 Dodano overflow-x: hidden dla taskItem - jeśli będzie bardzo długie słowo w nazwie zadania (lub link itp), to nie będzie pojawiał się poziomy scroll.
 
 ++++++++++++++++++++++++
 
-## v1.0.5 - 19.12.2019
+### v1.0.5 - 19.12.2019
 
 1. Użyto spread operatora z props w ToDoListsFull.js zamiast wypisywania wszystkich props pojedynczo. Dodano też 'props.' do wszystkich fn w tym pliku.
 
@@ -68,7 +68,7 @@ Dodano overflow-x: hidden dla taskItem - jeśli będzie bardzo długie słowo w 
 
 ++++++++++++++++++++++++
 
-## v1.0.4 - 17.12.2019
+### v1.0.4 - 17.12.2019
 
 1. Poprawiono stylowanie dla mobile - między pustymi listami nie ma już pustej przestrzeni.
 
@@ -82,7 +82,7 @@ event.dataTransfer.setData('text', taskId);
 
 ++++++++++++++++++++++++
 
-## v1.0.3 - 17.12.2019
+### v1.0.3 - 17.12.2019
 
 Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 - Teraz jest jeden dodający zadanie na początku listy (addTaskFirst) oraz drugi - dodający zadanie na końcu (addTaskLast).
@@ -91,7 +91,7 @@ Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 
 ++++++++++++++++++++++++
 
-## v1.0.2 - 14.12.2019
+### v1.0.2 - 14.12.2019
 
 1. Dodanie możliwości zaznaczania tekstu myszką w zadaniach i nazwach list:
 - Przy rozpoczęciu edycji tekstu zadania usuwane jest draggable=true z zadania oraz listy, w której się ono znajduje.
@@ -105,7 +105,7 @@ Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 
 ++++++++++++++++++++++++
 
-## v1.0.1 - 14.12.2019
+### v1.0.1 - 14.12.2019
 
 1. Poprawa stylowania:
 - Przeniesiono overflow i style scrollbara z ToDoList__container do ToDoList__tasks. Dzięki temu scrollują się tylko zadania, a belka z nazwą listy zostaje na swoim miejscu.
@@ -117,7 +117,7 @@ Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 
 ++++++++++++++++++++++++
 
-## v1.0.0 - 13.12.2019
+### v1.0.0 - 13.12.2019
 
 Fn saveToLS - zapisywanie i pobieranie state z Local Storage:
 - W index.js dodany skrypt przez renderem Reacta, który sprawdza, czy w LS istnieje element myReactTasks. Jeśli nie, to tworzy pusty element. Gdyby nie było żadnego, to apka w ogóle się nie wyrenderuje (nawet MainControls).
@@ -129,13 +129,13 @@ Zapis do LS następuje po dodaniu listy, po edycji nazwy listy, po usunięciu li
 
 ++++++++++++++++++++++++
 
-## v.0.9.5 - 13.12.2019
+### v.0.9.5 - 13.12.2019
 
 Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesiona z nie-reactowej apki i importowana w index.js. Dodatkowo w App.js importowano obiekt click oraz podłączono go w dragStart dla tasków i list, żeby po zakończeniu drag'n'drop nie było możliwe poziome scrollowanie bez trzymania przycisku myszy.
 
 ++++++++++++++++++++++++
 
-## v0.9.0 - 10.12.2019, 11.12.2019, 12.12.2019
+### v0.9.0 - 10.12.2019, 11.12.2019, 12.12.2019
 
 1. Fn dragAndDrop dla Tasks i Lists:
   - Taski posiadają w state: isTaskDragged oraz isTaskDraggedOver (oba domyślnie false).
@@ -150,7 +150,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ++++++++++++++++++++++++
 
-## v0.8.0 - 09.12.2019
+### v0.8.0 - 09.12.2019
 
 1. Poprawiono fn addList, która nie zawierała dodanego ostatnio elementu odpowiadającego za klasy przypisane do listy. Bez tego apka wywalała się przy dodawaniu nowego zadania.
 
@@ -166,7 +166,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ++++++++++++++++++++++++
 
-## v0.5.0 - 08.12.2019
+### v0.5.0 - 08.12.2019
 
 1. Funkcja spanEdit - jeśli ma być funkcją reactową, to nie da się jej po prostu przekopiować z poprzedniego projektu i wstawić dla onClick i onBlur przy spanach.
   - Podzielono ją na kilka fn (listNameShowInput oraz listNameEdit [tutaj jest też dodatkowy event onKeyPress dla 'enter'])
@@ -182,7 +182,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ++++++++++++++++++++++++
 
-## v0.4.0 - 07.12.2019
+### v0.4.0 - 07.12.2019
 
 1. Dodano warunkowe renderowanie w Tasks.js uwzględniające czy task isPrio oraz isInProgress - w zależności od statusów od razu nadawana jest odpowiednia klasa elementowi (zmieniająca jego kolor). Jest tu sporo powtarzania kodu, ale nie widzę na razie możliwości, żeby to skrócić, ponieważ jednocześnie będą nadawane odpowiednie funkcje buttonom, żeby działały na właściwy element.
 
@@ -192,7 +192,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ++++++++++++++++++++++++
 
-## v0.3.0 - 07.12.2019
+### v0.3.0 - 07.12.2019
 
 1. Usunięto ternary operator z ToDoLists - jeśli state z listami zadań w App.js jest pusty, to po prostu nic się nie wyświetli. Nie ma potrzeby pokazywania np. dodatkowego napisu, że lista jest pusta.
 
@@ -202,7 +202,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ++++++++++++++++++++++++
 
-## v0.2.0 - 06.12.2019
+### v0.2.0 - 06.12.2019
 
 1. Przeniesiono <div className="mainContainer"> z index.html do App.js oraz dodano tam tagi <main></main>.
 
@@ -219,7 +219,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ++++++++++++++++++++++++
 
-## v0.1.0 - 05.12.2019
+### v0.1.0 - 05.12.2019
 
 1. Start pracy - rozrysowanie i planowanie zmian względem wersji bez Reacta
  - znika podział na kategorie zadań na liście - wcześniej były Najważniejsze oraz Zadania
