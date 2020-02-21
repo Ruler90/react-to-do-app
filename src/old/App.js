@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './scss/App.css';
-import MainControls from './Components/MainControls';
-import ToDoLists, { NewTask } from './Components/ToDoListsFull';
+import MainControls from './components/MainControls';
+import ToDoLists, { NewTask } from './components/ToDoListsFull';
 import { click } from './dragScroll.js';
 
 export default class App extends Component {

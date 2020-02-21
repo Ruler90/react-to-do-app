@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.jsx",
   mode: "development",
   module: {
     rules: [
@@ -25,7 +25,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "public/"),
-    host: '192.168.0.66',
+    host: '192.168.0.67',
     port: 3000,
     publicPath: "http://localhost:3000/dist/"
   },

@@ -38,11 +38,53 @@ state = {
 
 ###############################
 
+# Refactor
+
+- podzielenie pliku ListsAndTasks.jsx na mniejsze komponenty
+- ponowne dodanie drag and drop do list i tasków
+- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Albo obiekt dodawany na czas przenoszenia i usuwany przy dragEnd i drop?
+- gdzie się da, to oprzeć kod na id taska lub listy i zrezygnować z pętli na rzecz find i some jak przy prioTask
+- podział styli na komponenty
+- zmiana nazw niektórych elementów i stylów z camelCase na snake_case (np. mainContainer na lists__container)
+- zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem
+- może funkcje z MainControls wydzielić do osobnych plików? -> każdy button jako osobny komponent
+- można poprawić style w main i body, żeby można było lekko zmienić główną strukturę apki (np. MainControls opakować w nav). Na razie przy próbie takiej zmiany obecne style wyłączają poziomy scrollbar przy większej ilości list, więc to temat po refactorze.
+
+Szybsze szukanie konkretnego elementu:
+Sama lista:
+const myList = myTaskLists.find(list => list.tasks.some(task => task.taskId === 1580641226650))
+
+###############################
+
 # Changelog
 
 ++++++++++++++++++++++++
 
-### v1.0.7 - 02.01.2019
+### v1.0.8 - 20.02.2020, 21.02.2020
+
+0. Poprzednia wersja była z 02.01.2020, a nie 2019, jak błędnie podano.
+
+Refactor kodu:
+
+1. Przygotowanie nowych komponentów .jsx z logiką ze poprzednich komponentów .js.
+
+2. Zmiana eol z CRLF na LF.
+
+3. Zmiana komponentów klasowych na funkcyjne.
+
+4. Dodanie contextu do obsługi state.
+
+5. Plik App.jsx teraz zawiera praktycznie samą strukturę apki, a pozostałe elementy i funkcje są w plikach MainControls.jsx oraz ListsAndTasks.jsx. Później te pliki też będą dzielone na mniejsze komponenty z przypisanymi im stylami.
+
+5. Poprawiono kod dla prioTask i taskInProgress - zamiast pętli for of jest połączona metoda find oraz some, w których jest wykorzystawne id taska otrzymywane przez fn jako argument. Najpierw jest szukana lista zawierająca task o konkretnym id, potem jest wyszukiwany w niej ten konkretny task, a następnie są modyfikowane jego klasy.
+
+6. Zmiana pytania przy usuwaniu listy z "Remove entire day?" na "Remove this list?".
+
+7. Ustawiono w Webpacku index.jsx jako entry point i webpack dev server działa obecnie już na nowych plikach. Przy tym commicie apka wydaje się działać dokładnie tak jak poprzednia wersja, ale jest pozbawiona kodu odpowiedzialnego za drag and drop - będzie dodany ponownie później.
+
+++++++++++++++++++++++++
+
+### v1.0.7 - 02.01.2020
 
 1. Zmiana styli:
 - Widok z poziomym scrollem mają teraz też ekrany 10 cali.
