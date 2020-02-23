@@ -2,7 +2,7 @@ import React from 'react';
 import './scss/App.css';
 import ToDoContextProvider from './contexts/ToDoContext';
 import MainControls from './components/MainControls';
-import ToDoLists from './components/ListsAndTasks';
+import ToDoLists from './components/ToDoLists';
 
 const App = () => (
   <ToDoContextProvider>

@@ -40,23 +40,39 @@ state = {
 
 # Refactor
 
-- podzielenie pliku ListsAndTasks.jsx na mniejsze komponenty
 - ponowne dodanie drag and drop do list i tasków
 - rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Albo obiekt dodawany na czas przenoszenia i usuwany przy dragEnd i drop?
 - gdzie się da, to oprzeć kod na id taska lub listy i zrezygnować z pętli na rzecz find i some jak przy prioTask
+- takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
 - podział styli na komponenty
 - zmiana nazw niektórych elementów i stylów z camelCase na snake_case (np. mainContainer na lists__container)
 - zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem
 - może funkcje z MainControls wydzielić do osobnych plików? -> każdy button jako osobny komponent
 - można poprawić style w main i body, żeby można było lekko zmienić główną strukturę apki (np. MainControls opakować w nav). Na razie przy próbie takiej zmiany obecne style wyłączają poziomy scrollbar przy większej ilości list, więc to temat po refactorze.
-
-Szybsze szukanie konkretnego elementu:
-Sama lista:
-const myList = myTaskLists.find(list => list.tasks.some(task => task.taskId === 1580641226650))
+- przetestować czy na pewno działają wszystkie fn
 
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+### v1.0.9 - 23.02.2020
+
+Refactor kodu:
+
+1. Zmiana pętli na szukanie bezpośrednio w arrayu po id elementu dla fn:
+- deleteTask
+- taskContentShowInput
+- taskContentEdit
+
+2. Zmiana szukania po całym elemencie na szukanie po id elementu dla fn:
+- addTaskFirst
+- addTaskLast
+- listNameShowInput
+- listNameEdit
+
+3. Podzielenie ListsAndTasks.jsx na oddzielne komponenty ToDoLists.jsx oraz Tasks.jsx i import do nich odpowiednich plików ze stylami.
 
 ++++++++++++++++++++++++
 
