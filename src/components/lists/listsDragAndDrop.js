@@ -1,4 +1,4 @@
-import { click } from './dragScroll';
+import { click } from '../other-features/dragScroll';
 
 export const listDragStartHandler = (listId, event, myTaskLists, setMyTaskLists) => {
   if (event.target.classList.contains('ToDoList__container')) {

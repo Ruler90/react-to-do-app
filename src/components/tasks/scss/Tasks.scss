@@ -12,9 +12,35 @@
     &:hover {
         transform: scale(1.03);
     }
+}
 
-    .editableSpan {
-        font-size: 12px;
+.editableSpan--task {
+    display: block;
+    margin: 15px 5px 5px 5px;
+    min-height: 20px;
+    font-size: 12px;
+}
+
+.editableSpan--task:hover {
+    cursor: pointer;
+}
+
+.editableInput--task {
+    display: none;
+    margin: 15px 5px 5px 5px;
+    width: 94%;
+    font-size: 12px;
+}
+
+.spanEdit--task {
+    .editableSpan--task {
+        display: none;
+    }
+}
+
+.spanEdit--task {
+    .editableInput--task {
+        display: initial;
     }
 }
 
@@ -30,7 +56,6 @@
 .taskInProgress {
     background: #fcc100;
 }
-
 
 .prioBtn {
     background: #FF5B5B;

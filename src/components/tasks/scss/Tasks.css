@@ -18,8 +18,30 @@
           transform: scale(1.03);
 }
 
-.taskItem .editableSpan {
+.editableSpan--task {
+  display: block;
+  margin: 15px 5px 5px 5px;
+  min-height: 20px;
   font-size: 12px;
+}
+
+.editableSpan--task:hover {
+  cursor: pointer;
+}
+
+.editableInput--task {
+  display: none;
+  margin: 15px 5px 5px 5px;
+  width: 94%;
+  font-size: 12px;
+}
+
+.spanEdit--task .editableSpan--task {
+  display: none;
+}
+
+.spanEdit--task .editableInput--task {
+  display: initial;
 }
 
 .taskControlBtns {

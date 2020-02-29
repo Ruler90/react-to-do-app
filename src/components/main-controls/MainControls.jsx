@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { ToDoContext } from '../contexts/ToDoContext';
-import '../scss/MainControls.css';
+import { ToDoContext } from '../../contexts/ToDoContext';
+import './scss/MainControls.css';
 
 const MainControls = () => {
   const { myTaskLists, setMyTaskLists } = useContext(ToDoContext);

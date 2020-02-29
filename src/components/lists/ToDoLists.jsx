@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import '../scss/ToDoLists.css';
-import '../scss/spanEdit.css';
-import { ToDoContext } from '../contexts/ToDoContext';
-import Task from './Tasks';
+import './scss/ToDoLists.css';
+import { ToDoContext } from '../../contexts/ToDoContext';
+import Task from '../tasks/Tasks';
 import { listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, listDropHandler } from './listsDragAndDrop';
 
 const ToDoLists = () => {
@@ -11,7 +10,7 @@ const ToDoLists = () => {
   const newTask = {
     taskId: new Date().getTime(),
     taskContent: '',
-    taskClasses: ['taskItem', 'spanEdit'],
+    taskClasses: ['taskItem', 'spanEdit--task'],
     isTaskDragged: false,
     isTaskDraggedOver: false,
   };
@@ -22,7 +21,7 @@ const ToDoLists = () => {
     newListsArray[myListIndex].tasks.unshift(newTask);
     setMyTaskLists(newListsArray);
     localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
-    setTimeout(() => document.querySelector('.spanEdit input[type=text]').focus(), 50);
+    setTimeout(() => document.querySelector('.spanEdit--task textarea').focus(), 50);
   };
 
   const addTaskLast = (listId) => {
@@ -31,13 +30,13 @@ const ToDoLists = () => {
     newListsArray[myListIndex].tasks.push(newTask);
     setMyTaskLists(newListsArray);
     localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
-    setTimeout(() => document.querySelector('.spanEdit input[type=text]').focus(), 50);
+    setTimeout(() => document.querySelector('.spanEdit--task textarea').focus(), 50);
   };
 
   const listNameShowInput = (listId, event) => {
     const newListsArray = myTaskLists.slice();
     const myListIndex = newListsArray.findIndex(el => el.listId === listId);
-    newListsArray[myListIndex].listClasses.push('spanEdit');
+    newListsArray[myListIndex].listClasses.push('spanEdit--list');
     event.target.nextSibling.value = newListsArray[myListIndex].listName;
     setTimeout(() => event.target.nextSibling.focus(), 50);
     event.target.closest('.ToDoList__container').removeAttribute('draggable');
@@ -49,8 +48,8 @@ const ToDoLists = () => {
       const newListsArray = myTaskLists.slice();
       const myListIndex = newListsArray.findIndex(el => el.listId === listId);
       newListsArray[myListIndex].listName = event.target.value;
-      if (newListsArray[myListIndex].listClasses.find(el => el === 'spanEdit')) {
-        const classToRemoveIndex = newListsArray[myListIndex].listClasses.findIndex(el => el === 'spanEdit');
+      if (newListsArray[myListIndex].listClasses.find(el => el === 'spanEdit--list')) {
+        const classToRemoveIndex = newListsArray[myListIndex].listClasses.findIndex(el => el === 'spanEdit--list');
         newListsArray[myListIndex].listClasses.splice(classToRemoveIndex, 1);
       }
       event.target.closest('.ToDoList__container').setAttribute('draggable', true);
@@ -76,7 +75,7 @@ const ToDoLists = () => {
       <div className={list.listClasses.join(' ')}>
         <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list.listId)} />
         <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => addTaskLast(list.listId)} />
-        <span className="editableSpan" onClick={() => listNameShowInput(list.listId, event)}>{list.listName}</span>
+        <span className="editableSpan--list" onClick={() => listNameShowInput(list.listId, event)}>{list.listName}</span>
         <input type="text" className="editableInput--list" onBlur={() => listNameEdit(list.listId, event)} onKeyPress={() => listNameEdit(list.listId, event)} />
         <input type="button" className="defaultButton removeDayButton" value="X" onClick={() => deleteList(list.listId)} />
       </div>
