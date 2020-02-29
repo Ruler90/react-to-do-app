@@ -1,4 +1,4 @@
-@import 'placeholder-classes';
+@import '../../../scss/scrollbar-styles';
 
 .ToDoList__container {
     border-radius: 4px;
@@ -37,9 +37,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
-    .editableSpan {
-        font-size: 14px;
+.editableSpan--list {
+    display: block;
+    margin: 15px 5px 5px 5px;
+    min-height: 20px;
+    font-size: 14px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.editableInput--list {
+    display: none;
+    margin: 15px 5px 5px 5px;
+    width: 50%;
+}
+
+.spanEdit--list {
+    .editableSpan--list {
+        display: none;
+    }
+}
+
+.spanEdit--list {
+    .editableInput--list {
+        display: initial;
     }
 }
 

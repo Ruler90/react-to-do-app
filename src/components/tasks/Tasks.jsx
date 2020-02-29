@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { ToDoContext } from '../contexts/ToDoContext';
-import '../scss/Tasks.css';
-import '../scss/spanEdit.css';
+import { ToDoContext } from '../../contexts/ToDoContext';
+import './scss/Tasks.css';
 import { taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, taskDropHandler } from './tasksDragAndDrop';
 
 const Task = (task) => {
@@ -25,7 +24,7 @@ const Task = (task) => {
     const newListsArray = myTaskLists.slice();
     const myTask = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
     if (!myTask.taskClasses.find(el => el === 'taskInProgress')) {
-      myTask.taskClasses.push('taskInProgress')
+      myTask.taskClasses.push('taskInProgress');
     } else {
       const classToRemove = myTask.taskClasses.findIndex(el => el === 'taskInProgress');
       myTask.taskClasses.splice(classToRemove, 1);
@@ -46,7 +45,7 @@ const Task = (task) => {
   const taskContentShowInput = (taskId, event) => {
     const newListsArray = myTaskLists.slice();
     const myTask = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
-    myTask.taskClasses.push('spanEdit');
+    myTask.taskClasses.push('spanEdit--task');
     event.target.closest('.taskItem').removeAttribute('draggable');
     event.target.closest('.ToDoList__container').removeAttribute('draggable');
     event.target.nextSibling.value = myTask.taskContent;
@@ -59,8 +58,8 @@ const Task = (task) => {
       const newListsArray = myTaskLists.slice();
       const myTask = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
       myTask.taskContent = event.target.value;
-      if (myTask.taskClasses.find(el => el === 'spanEdit')) {
-        const classToRemoveIndex = myTask.taskClasses.findIndex(el => el === 'spanEdit');
+      if (myTask.taskClasses.find(el => el === 'spanEdit--task')) {
+        const classToRemoveIndex = myTask.taskClasses.findIndex(el => el === 'spanEdit--task');
         myTask.taskClasses.splice(classToRemoveIndex, 1);
       }
       event.target.closest('.taskItem').setAttribute('draggable', true);
@@ -77,8 +76,8 @@ const Task = (task) => {
         <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task.taskId)} />
         <input className="defaultButton removeTaskBtn" type="button" value="X" onClick={() => deleteTask(task.taskId)} />
       </div>
-      <span className="editableSpan" onClick={() => taskContentShowInput(task.taskId, event)}>{task.taskContent}</span>
-      <input type="text" className="editableInput--task" onBlur={() => taskContentEdit(task.taskId, event)} onKeyPress={() => taskContentEdit(task.taskId, event)} />
+      <span className="editableSpan--task" onClick={() => taskContentShowInput(task.taskId, event)}>{task.taskContent}</span>
+      <textarea className="editableInput--task" onBlur={() => taskContentEdit(task.taskId, event)} onKeyPress={() => taskContentEdit(task.taskId, event)} />
     </div>
   );
 };

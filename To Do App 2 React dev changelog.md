@@ -28,27 +28,23 @@ state = {
 
 ###############################
 
-# To Do:
-
-- Redux dla wspólnego state i wtedy ponownie rozdzielić komponent ToDoLists oraz Tasks.
-
-- Przenieść różne funkcje do oddzielnych plików i importować do App.js?
-
-- Sprawdzać kod, czy parametry true/false zmieniają się prawidłowo - można sprawdzać też w pliku zapisu po pewnej ilości wykonanych akcji, czy wszędzie jest false (nie powinno być nigdzie true przy zapisywaniu). Jednocześnie wszystko jest tak oparte na tych parametrach, że gdyby coś było źle, to byłoby widać, że nie wszystko działa prawidłowo (np. przenoszenie zadań).
-
-###############################
-
 # Refactor
 
-- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Pomyśleć nad tym, jak już będzie działająca wersja poprzedniego d'n'd. Przy tymczasowych data attributes trzeba by było zmienić szukanie z id listy czy taska na szukanie, który element ma dany atrybut.
+- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Przy tymczasowych data attributes trzeba by było zmienić szukanie z id listy czy taska na szukanie, który element ma dany atrybut. Przy eventach może być konieczność użycia e.target.closest i wskazać klasę elementu, który ma dostać data-attribute lub ma on zostać usunięty. Tylko dodanie data-attribute chyba zmienia DOM, więc wiązałoby się to prawdopodobnie z dodatkowymi re-renderami.
+Albo może usunąć całkowicie isElDragged i isElDraggedOver ze state i dodawać je tylko przy konkretnych eventach?
+
 - takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
-- podział styli na komponenty
-- zmiana nazw niektórych elementów i stylów z camelCase na snake_case (np. mainContainer na lists__container)
-- ulepszona struktura projektu: components - component_name - wszystkie pliki dotyczące komponentu, np. folder ToDoLists i w nim też scss, css, js odpowiedzialny za d'n'd dla list itd. Poprawić wtedy importy.
-- zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem
-- może funkcje z MainControls wydzielić do osobnych plików? -> każdy button jako osobny komponent
-- można poprawić style w main i body, żeby można było lekko zmienić główną strukturę apki (np. MainControls opakować w nav). Na razie przy próbie takiej zmiany obecne style wyłączają poziomy scrollbar przy większej ilości list, więc to temat po refactorze.
-- przetestować czy na pewno działają wszystkie fn, czy poprawnie zmienia się state, czy odpowiednie zmiany zapisują się do LS i czy otrzymuje się poprawny plik zapisu i czy można go wczytać bez problemu
+
+- zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem. Pamiętać, że niektóre eventy d'n'd mają ustawione setMyTasks, więc wtedy mogą sie zapisywać do LS także true nadane w isElDragged i isElDraggedOver.
+
+- textarea zamiast inputa?
+
+- przetestować:
+  - czy na pewno działają wszystkie fn
+  - czy poprawnie zmienia się state
+  - czy odpowiednie zmiany zapisują się do LS
+  - czy otrzymuje się poprawny plik zapisu
+  - czy można wczytać ten plik bez problemu
 
 # Chrome Extension
 
@@ -57,6 +53,23 @@ state = {
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+### v1.1.1 - 29.02.2020
+
+1. Zmiana struktury i plików projektu:
+- utworzenie w katalogu components folderów na poszczególne komponenty: lists, main-controls, other-features (dragScroll), tasks
+- umieszczenie w tych katalogach plików js i jsx oraz folderu scss ze stylami wymaganymi przez dany komponent
+- zmiana nazwy _placeholder-classes.scss na _scrollbar-styles.scss 
+- poprawienie ścieżek importów po zmianie struktury
+- połączenie plików spanEdit z głównymi plikami stylów dla list i tasks - osobne nazwy dla obu elementów
+
+2. Wrzucenie komponentu MainControls w tagi nav w pliku App.jsx
+
+3. Zmiana klasy głównego containera z mainContainer na lists__container.
+
+4. Zmiana w taskach inputa na textarea do wprowadzania/edycji treści zadania.
 
 ++++++++++++++++++++++++
 

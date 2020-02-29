@@ -46,7 +46,7 @@ body {
   }
 }
 
-.mainContainer {
+.lists__container {
   margin: 0 auto;
   border-radius: 4px;
   min-width: 250px;
@@ -61,7 +61,7 @@ body {
 }
 
 @media screen and (min-width: 960px) {
-  .mainContainer {
+  .lists__container {
     -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
     height: 85vh;

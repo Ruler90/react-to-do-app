@@ -1,4 +1,4 @@
-import { click } from './dragScroll';
+import { click } from '../other-features/dragScroll';
 
 export const taskDragStartHandler = (taskId, event, myTaskLists, setMyTaskLists) => {
   click.mousedown = false;

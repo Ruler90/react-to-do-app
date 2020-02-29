@@ -75,8 +75,29 @@
           align-items: center;
 }
 
-.ToDoList__nameBar .editableSpan {
+.editableSpan--list {
+  display: block;
+  margin: 15px 5px 5px 5px;
+  min-height: 20px;
   font-size: 14px;
+}
+
+.editableSpan--list:hover {
+  cursor: pointer;
+}
+
+.editableInput--list {
+  display: none;
+  margin: 15px 5px 5px 5px;
+  width: 50%;
+}
+
+.spanEdit--list .editableSpan--list {
+  display: none;
+}
+
+.spanEdit--list .editableInput--list {
+  display: initial;
 }
 
 .ToDoList__tasks {

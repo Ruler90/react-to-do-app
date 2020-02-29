@@ -9,8 +9,8 @@ export function dragScroll() {
   let scrollLeft;
 
   main.addEventListener('mousedown', (e) => {
-    // added if statement for dragScroll to fire not tasks, lists, etc. 
-    if (e.target.classList.contains('mainContainer') || e.target === main) {
+    // added if statement for dragScroll to not fire directly on tasks, lists, etc
+    if (e.target.classList.contains('lists__container') || e.target === main) {
       click.mousedown = true;
       startX = e.pageX - main.offsetLeft;
       scrollLeft = main.scrollLeft;
