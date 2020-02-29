@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { ToDoContext } from '../contexts/ToDoContext';
 import '../scss/Tasks.css';
 import '../scss/spanEdit.css';
+import { taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, taskDropHandler } from './tasksDragAndDrop';
 
 const Task = (task) => {
   const { myTaskLists, setMyTaskLists } = useContext(ToDoContext);
@@ -60,7 +61,7 @@ const Task = (task) => {
       myTask.taskContent = event.target.value;
       if (myTask.taskClasses.find(el => el === 'spanEdit')) {
         const classToRemoveIndex = myTask.taskClasses.findIndex(el => el === 'spanEdit');
-        myTask.taskClasses.splice(classToRemoveIndex, 1)
+        myTask.taskClasses.splice(classToRemoveIndex, 1);
       }
       event.target.closest('.taskItem').setAttribute('draggable', true);
       event.target.closest('.ToDoList__container').setAttribute('draggable', true);
@@ -70,8 +71,7 @@ const Task = (task) => {
   };
 
   return (
-      // wyrzucone stąd na razie wszystko związane z d'n'd - zostawić na koniec, jak reszta będzie działać i zajrzeć do starej wersji
-    <div className={task.taskClasses.join(' ')} draggable="true">
+    <div className={task.taskClasses.join(' ')} draggable="true" onDragStart={() => taskDragStartHandler(task.taskId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => taskDragEndHandler(myTaskLists, setMyTaskLists)} onDragOver={() => taskDragOverHandler(task.taskId, event, myTaskLists)} onDragLeave={() => taskDragLeaveHandler(task.taskId, myTaskLists, setMyTaskLists)} onDrop={() => taskDropHandler(myTaskLists, setMyTaskLists)}>
       <div className="taskControlBtns">
         <input className="defaultButton prioBtn" type="button" value="P" onClick={() => prioTask(task.taskId)} />
         <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task.taskId)} />

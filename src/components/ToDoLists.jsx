@@ -3,6 +3,7 @@ import '../scss/ToDoLists.css';
 import '../scss/spanEdit.css';
 import { ToDoContext } from '../contexts/ToDoContext';
 import Task from './Tasks';
+import { listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, listDropHandler } from './listsDragAndDrop';
 
 const ToDoLists = () => {
   const { myTaskLists, setMyTaskLists } = useContext(ToDoContext);
@@ -70,30 +71,23 @@ const ToDoLists = () => {
     }
   };
 
-  const taskLists = myTaskLists.map(list => {
-    // for every list create all tasks
-    const taskItems = list.tasks.map(task => {
-      return (
-        <Task { ...task } key={task.taskId} />
-      );
-    });
-    return (
-      <div className="ToDoList__container" draggable="true" key={list.listId}>
-        <div className={list.listClasses.join(' ')}>
-          <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list.listId)} />
-          <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => addTaskLast(list.listId)} />
-          <span className="editableSpan" onClick={() => listNameShowInput(list.listId, event)}>{list.listName}</span>
-          <input type="text" className="editableInput--list" onBlur={() => listNameEdit(list.listId, event)} onKeyPress={() => listNameEdit(list.listId, event)} />
-          <input type="button" className="defaultButton removeDayButton" value="X" onClick={() => deleteList(list.listId)} />
-        </div>
-
-        <div className="ToDoList__tasks">
-          {/* here we added all tasks created at the top of this fn */}
-          {taskItems}
-        </div>
+  const taskLists = myTaskLists.map(list => (
+    <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => listDragEndHandler(myTaskLists, setMyTaskLists)} onDragOver={() => listDragOverHandler(list.listId, event, myTaskLists)} onDragLeave={() => listDragLeaveHandler(list.listId, myTaskLists, setMyTaskLists)} onDrop={() => listDropHandler(myTaskLists, setMyTaskLists)}>
+      <div className={list.listClasses.join(' ')}>
+        <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list.listId)} />
+        <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => addTaskLast(list.listId)} />
+        <span className="editableSpan" onClick={() => listNameShowInput(list.listId, event)}>{list.listName}</span>
+        <input type="text" className="editableInput--list" onBlur={() => listNameEdit(list.listId, event)} onKeyPress={() => listNameEdit(list.listId, event)} />
+        <input type="button" className="defaultButton removeDayButton" value="X" onClick={() => deleteList(list.listId)} />
       </div>
-    );
-  });
+
+      <div className="ToDoList__tasks">
+        {list.tasks.map(task => (
+          <Task { ...task } key={task.taskId} />
+        ))}
+      </div>
+    </div>
+  ));
   return (
     taskLists
   );

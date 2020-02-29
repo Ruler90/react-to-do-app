@@ -1,14 +1,14 @@
 // can't use isDown variable because it becomes const after import/export
 export const click = {
-  mousedown: false
+  mousedown: false,
 };
 
-export function dragScroll () {
+export function dragScroll() {
   const main = document.querySelector('main');
   let startX;
   let scrollLeft;
 
-  main.addEventListener('mousedown', function (e) {
+  main.addEventListener('mousedown', (e) => {
     // added if statement for dragScroll to fire not tasks, lists, etc. 
     if (e.target.classList.contains('mainContainer') || e.target === main) {
       click.mousedown = true;
@@ -19,16 +19,16 @@ export function dragScroll () {
     }
   });
 
-  main.addEventListener('mouseleave', function () {
+  main.addEventListener('mouseleave', () => {
     click.mousedown = false;
   });
 
-  main.addEventListener('mouseup', function () {
+  main.addEventListener('mouseup', () => {
     click.mousedown = false;
     main.removeAttribute('style');
   });
 
-  main.addEventListener('mousemove', function (e) {
+  main.addEventListener('mousemove', (e) => {
     if (!click.mousedown) return;
     // Drag&Drop fn won't work with e.preventDefault()
     // e.preventDefault();

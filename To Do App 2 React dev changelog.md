@@ -40,20 +40,52 @@ state = {
 
 # Refactor
 
-- ponowne dodanie drag and drop do list i tasków
-- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Albo obiekt dodawany na czas przenoszenia i usuwany przy dragEnd i drop?
-- gdzie się da, to oprzeć kod na id taska lub listy i zrezygnować z pętli na rzecz find i some jak przy prioTask
+- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Pomyśleć nad tym, jak już będzie działająca wersja poprzedniego d'n'd. Przy tymczasowych data attributes trzeba by było zmienić szukanie z id listy czy taska na szukanie, który element ma dany atrybut.
 - takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
 - podział styli na komponenty
 - zmiana nazw niektórych elementów i stylów z camelCase na snake_case (np. mainContainer na lists__container)
+- ulepszona struktura projektu: components - component_name - wszystkie pliki dotyczące komponentu, np. folder ToDoLists i w nim też scss, css, js odpowiedzialny za d'n'd dla list itd. Poprawić wtedy importy.
 - zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem
 - może funkcje z MainControls wydzielić do osobnych plików? -> każdy button jako osobny komponent
 - można poprawić style w main i body, żeby można było lekko zmienić główną strukturę apki (np. MainControls opakować w nav). Na razie przy próbie takiej zmiany obecne style wyłączają poziomy scrollbar przy większej ilości list, więc to temat po refactorze.
-- przetestować czy na pewno działają wszystkie fn
+- przetestować czy na pewno działają wszystkie fn, czy poprawnie zmienia się state, czy odpowiednie zmiany zapisują się do LS i czy otrzymuje się poprawny plik zapisu i czy można go wczytać bez problemu
+
+# Chrome Extension
+
+- zbundlowanie kodu z odpowiednim configiem Webpacka i Babela i wrzucenie do Chrome Store
 
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+### v1.1.0 - 24.02.2020, 26.02.2020, 27.02.2020, 28.02.2020, 29.02.2020
+
+Refactor kodu:
+
+1. W komponencie ToDoLists.jsx przeniesiono generowanie tasków bezpośrednio do diva ToDoList__tasks zamiast generowania całej grupy elementów nad listą i przekazywania całej grupy później do tego diva.
+
+2. Ponowne dodanie fn odpowiedzialnych za drag'n'drop list i tasków:
+- listDragStartHandler
+- listDragEndHandler - ta fn zmienia wszystkie isDragged i isDraggedOver z true na false
+- listDragOverHandler
+- listDragLeaveHandler
+- listDropHandler
+- taskDragStartHandler
+- taskDragEndHandler - identyczna jak listDragEndHandler
+- taskDragOverHandler
+- taskDragLeaveHandler
+- taskDropHandler
+
+Jeśli gdzieś były pętle, to zmieniono na array.map, array.finIndex etc.
+W poprzedniej wersji d'n'd dla tasków i list było połączone. Teraz będzie oddzielne dla obu elementów.
+
+W fn listDropHandler dodano także if statement odpowiedzialny za dodanie taska na końcu listy, jeśli zostanie przeciągnięty na listę, a nie na konkretny task na niej.
+
+W fn taskDragLeaveHandler dodano setTimeout do czyszczenia klasy .draggedOverItem, ponieważ wydaje się to być jedynym działającym poprawnie rozwiązaniem. Przy wielu innych testowanych rozwiązaniach ten event albo czyścił od razu klasę, przez co nie było widać efektu nadawanego przez taskDragOverHandler albo przy szybkim hoverze kilka elementów naraz zmieniało kolor.
+
+3. W ToDoLists.jsx oraz Tasks.jsx dodano myTaskLists oraz setMyTaskLists do handlerów d'n'd, żeby można było przenieść wszystkie handlery do oddzielnych plików.
 
 ++++++++++++++++++++++++
 
