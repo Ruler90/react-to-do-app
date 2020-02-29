@@ -38,11 +38,101 @@ state = {
 
 ###############################
 
+# Refactor
+
+- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Pomyśleć nad tym, jak już będzie działająca wersja poprzedniego d'n'd. Przy tymczasowych data attributes trzeba by było zmienić szukanie z id listy czy taska na szukanie, który element ma dany atrybut.
+- takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
+- podział styli na komponenty
+- zmiana nazw niektórych elementów i stylów z camelCase na snake_case (np. mainContainer na lists__container)
+- ulepszona struktura projektu: components - component_name - wszystkie pliki dotyczące komponentu, np. folder ToDoLists i w nim też scss, css, js odpowiedzialny za d'n'd dla list itd. Poprawić wtedy importy.
+- zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem
+- może funkcje z MainControls wydzielić do osobnych plików? -> każdy button jako osobny komponent
+- można poprawić style w main i body, żeby można było lekko zmienić główną strukturę apki (np. MainControls opakować w nav). Na razie przy próbie takiej zmiany obecne style wyłączają poziomy scrollbar przy większej ilości list, więc to temat po refactorze.
+- przetestować czy na pewno działają wszystkie fn, czy poprawnie zmienia się state, czy odpowiednie zmiany zapisują się do LS i czy otrzymuje się poprawny plik zapisu i czy można go wczytać bez problemu
+
+# Chrome Extension
+
+- zbundlowanie kodu z odpowiednim configiem Webpacka i Babela i wrzucenie do Chrome Store
+
+###############################
+
 # Changelog
 
 ++++++++++++++++++++++++
 
-### v1.0.7 - 02.01.2019
+### v1.1.0 - 24.02.2020, 26.02.2020, 27.02.2020, 28.02.2020, 29.02.2020
+
+Refactor kodu:
+
+1. W komponencie ToDoLists.jsx przeniesiono generowanie tasków bezpośrednio do diva ToDoList__tasks zamiast generowania całej grupy elementów nad listą i przekazywania całej grupy później do tego diva.
+
+2. Ponowne dodanie fn odpowiedzialnych za drag'n'drop list i tasków:
+- listDragStartHandler
+- listDragEndHandler - ta fn zmienia wszystkie isDragged i isDraggedOver z true na false
+- listDragOverHandler
+- listDragLeaveHandler
+- listDropHandler
+- taskDragStartHandler
+- taskDragEndHandler - identyczna jak listDragEndHandler
+- taskDragOverHandler
+- taskDragLeaveHandler
+- taskDropHandler
+
+Jeśli gdzieś były pętle, to zmieniono na array.map, array.finIndex etc.
+W poprzedniej wersji d'n'd dla tasków i list było połączone. Teraz będzie oddzielne dla obu elementów.
+
+W fn listDropHandler dodano także if statement odpowiedzialny za dodanie taska na końcu listy, jeśli zostanie przeciągnięty na listę, a nie na konkretny task na niej.
+
+W fn taskDragLeaveHandler dodano setTimeout do czyszczenia klasy .draggedOverItem, ponieważ wydaje się to być jedynym działającym poprawnie rozwiązaniem. Przy wielu innych testowanych rozwiązaniach ten event albo czyścił od razu klasę, przez co nie było widać efektu nadawanego przez taskDragOverHandler albo przy szybkim hoverze kilka elementów naraz zmieniało kolor.
+
+3. W ToDoLists.jsx oraz Tasks.jsx dodano myTaskLists oraz setMyTaskLists do handlerów d'n'd, żeby można było przenieść wszystkie handlery do oddzielnych plików.
+
+++++++++++++++++++++++++
+
+### v1.0.9 - 23.02.2020
+
+Refactor kodu:
+
+1. Zmiana pętli na szukanie bezpośrednio w arrayu po id elementu dla fn:
+- deleteTask
+- taskContentShowInput
+- taskContentEdit
+
+2. Zmiana szukania po całym elemencie na szukanie po id elementu dla fn:
+- addTaskFirst
+- addTaskLast
+- listNameShowInput
+- listNameEdit
+
+3. Podzielenie ListsAndTasks.jsx na oddzielne komponenty ToDoLists.jsx oraz Tasks.jsx i import do nich odpowiednich plików ze stylami.
+
+++++++++++++++++++++++++
+
+### v1.0.8 - 20.02.2020, 21.02.2020
+
+0. Poprzednia wersja była z 02.01.2020, a nie 2019, jak błędnie podano.
+
+Refactor kodu:
+
+1. Przygotowanie nowych komponentów .jsx z logiką ze poprzednich komponentów .js.
+
+2. Zmiana eol z CRLF na LF.
+
+3. Zmiana komponentów klasowych na funkcyjne.
+
+4. Dodanie contextu do obsługi state.
+
+5. Plik App.jsx teraz zawiera praktycznie samą strukturę apki, a pozostałe elementy i funkcje są w plikach MainControls.jsx oraz ListsAndTasks.jsx. Później te pliki też będą dzielone na mniejsze komponenty z przypisanymi im stylami.
+
+5. Poprawiono kod dla prioTask i taskInProgress - zamiast pętli for of jest połączona metoda find oraz some, w których jest wykorzystawne id taska otrzymywane przez fn jako argument. Najpierw jest szukana lista zawierająca task o konkretnym id, potem jest wyszukiwany w niej ten konkretny task, a następnie są modyfikowane jego klasy.
+
+6. Zmiana pytania przy usuwaniu listy z "Remove entire day?" na "Remove this list?".
+
+7. Ustawiono w Webpacku index.jsx jako entry point i webpack dev server działa obecnie już na nowych plikach. Przy tym commicie apka wydaje się działać dokładnie tak jak poprzednia wersja, ale jest pozbawiona kodu odpowiedzialnego za drag and drop - będzie dodany ponownie później.
+
+++++++++++++++++++++++++
+
+### v1.0.7 - 02.01.2020
 
 1. Zmiana styli:
 - Widok z poziomym scrollem mają teraz też ekrany 10 cali.
