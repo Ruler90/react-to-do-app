@@ -44,6 +44,13 @@ const MainControls = () => {
       const loadFromFileBtn = document.querySelector('#fileInput');
       loadFromFileBtn.value = '';
     };
+    setTimeout(() => {
+      if (!document.querySelector('main')) {
+        alert('Couldn\'t load the file. Please reload.');
+      } else {
+        alert('File loaded.\n\nPlease make any changes before leaving or reloading this page to save your lists in local storage.');
+      }
+    }, 100);
     reader.onerror = function () {
       alert('Couldn\'t load the file');
     };

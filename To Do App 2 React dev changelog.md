@@ -41,7 +41,9 @@ state = {
 
 # Pomysły na przyszłość / uwagi:
 
-- Nadawanie listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto z tym kombinować? Przy przenoszeniu list trudno o pomyłkę, a zabawa z klasami to dodatkowe generowanie dużej ilości eventów.
+- Zapis do LS pozostanie jako linia kodu dodana do wybranych funkcji. Próbowano zmienić to na useEffect Hook, który odpalałby zapis do LS przy każdej zmianie state myTaskLists, ale ciężko byłby w ten sposób ograniczyć odpalanie zapisu przy wybranych fn. Z kolei bez żadnego ograniczenia zapis do LS byłby odpalany nawet przy eventach dragOver, co jest dodatkowym obciążeniem i nie jest potrzebne.
+
+- Nadawanie listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Tylko czy warto z tym kombinować? Przy przenoszeniu list trudno o pomyłkę, a zabawa z klasami to dodatkowe generowanie dużej ilości eventów.
 
 - Na średnich ekranach listy układają się w dwie kolumny. Wygląda to średnio, jeśli jedna lista ma np. 2 zadania, a druga 10 -> jest wtedy sporo pustej przestrzeni. Dla średnich ekranów można dodać określoną max-height dla list i dodać im overflow, żeby pojawiał się scroll w razie potrzeby, tak jak pojawia się na dużych ekranach. Zmienić wtedy też stylowanie scrolla, bo teraz jest tylko w MQ dla dużych ekranów. Na razie nie zmieniam tego, bo nigdy nie korzystałem z listy na średnim ekranie.
 
@@ -56,18 +58,9 @@ state = {
   - czy poprawnie zmienia się state
   - czy odpowiednie zmiany zapisują się do LS
   - czy otrzymuje się poprawny plik zapisu
-  - czy można wczytać ten plik bez problemu
+  - czy bez problemu można wczytać ten plik
 
 ###############################
-
-# Refactor
-
-- Takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań:
-  - połączyć wszystko w pliku ToDoLists.jsx
-  - poprawić nazwę pliku ze stylami, importować go w pliku Lists.jsx i usunąć import z ToDoLists.jsx
-
-- Zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem. Pamiętać, że niektóre eventy d'n'd mają ustawione setMyTasks, więc do LS mogą się zapisywać także tymaczasowe states z d'n'd, a tego lepiej uniknąć.
-
 
 # Chrome Extension
 
@@ -76,6 +69,14 @@ state = {
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+### v1.1.4 - 01.03.2020
+
+Rozbudowanie fn loadFromFile o setTimeout z dwoma alertami, żeby user wiedział, co się dzieje. setTimeout jest po to, żeby najpierw na ekranie pojawiła się zmiana, a dopiero potem komunikat (a w przypadku złego pliku, żeby w ogóle komunikat się pokazał).
+  - Jeśli wczytamy prawidłowy plik, to pojawi się info, że plik został załadowany i że dopiero po dokonaniu jakichkolwiek zmian nastąpi zapis do LS.
+  - Jeśli wczytamy nieprawidłowy plik, to będzie pusty ekran i pojawi się info, że nie można załadować pliku i żeby odświeżyć stronę.
 
 ++++++++++++++++++++++++
 
