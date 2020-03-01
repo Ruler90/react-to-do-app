@@ -1,5 +1,5 @@
 
-# Struktura state (kopia zapasowa)
+# Struktura state v1
 
 state = {
     lists: [
@@ -18,6 +18,27 @@ state = {
 
 ###############################
 
+# Struktura state v2
+
+state = {
+    lists: [
+      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'],
+      tasks: [
+        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'] },
+        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'] },
+        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'] }
+      ]},
+      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'],
+      tasks: [
+        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'] },
+        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'] },
+        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'] }
+      ]}
+    ]
+  }
+
+###############################
+
 # Pomysły na przyszłość / uwagi:
 
 - Nadawanie listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Dodatkowe ograniczenie - sprawdzenie, że jakakolwiek lista na isListDragged=true. Tylko czy warto z tym kombinować? Przy przenoszeniu list trudno o pomyłkę, a zabawa z klasami to dodatkowe generowanie dużej ilości eventów.
@@ -28,23 +49,23 @@ state = {
 
 ###############################
 
-# Refactor
+# To Do:
 
-- rozdzielenie ogólnego state od state dla d'n'd? Może jak w starej wersji nie obiekt z true/false tylko data-attributes dodawane na czas przenoszenia? Przy tymczasowych data attributes trzeba by było zmienić szukanie z id listy czy taska na szukanie, który element ma dany atrybut. Przy eventach może być konieczność użycia e.target.closest i wskazać klasę elementu, który ma dostać data-attribute lub ma on zostać usunięty. Tylko dodanie data-attribute chyba zmienia DOM, więc wiązałoby się to prawdopodobnie z dodatkowymi re-renderami.
-Albo może usunąć całkowicie isElDragged i isElDraggedOver ze state i dodawać je tylko przy konkretnych eventach?
-
-- takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
-
-- zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem. Pamiętać, że niektóre eventy d'n'd mają ustawione setMyTasks, więc wtedy mogą sie zapisywać do LS także true nadane w isElDragged i isElDraggedOver.
-
-- textarea zamiast inputa?
-
-- przetestować:
+- Po każdej większej zmianie w kodzie testować:
   - czy na pewno działają wszystkie fn
   - czy poprawnie zmienia się state
   - czy odpowiednie zmiany zapisują się do LS
   - czy otrzymuje się poprawny plik zapisu
   - czy można wczytać ten plik bez problemu
+
+###############################
+
+# Refactor
+
+- Takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
+
+- Zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem. Pamiętać, że niektóre eventy d'n'd mają ustawione setMyTasks, więc do LS mogą się zapisywać także tymaczasowe states z d'n'd, a tego lepiej uniknąć.
+
 
 # Chrome Extension
 
@@ -53,6 +74,19 @@ Albo może usunąć całkowicie isElDragged i isElDraggedOver ze state i dodawa�
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+### v1.1.2 - 29.02.2020
+
+Dalsze zmiany w drag and drop lists i tasks:
+
+1. Zostawienie setMyTaskLists tylko w tych eventach, gdzie to konieczne.
+2. Usunięcie ze state oraz z tworzenia nowych list i tasków key: value pairs -> isListDragged, isListDraggedOver, isTaskDragged, isTaskDraggedOver.
+3. Zastąpienie powyższych tymczasowymi key: value pairs, które nie będą przechowywane w state i będą tylko dodawane/usuwane podczas drag and drop -> draggedList, draggedOverList, draggedTask, draggedOverTask.
+4. Jeśli ktoś korzysta z tej listy, to warto dla porządku stworzyć plik z backupem, edytować go i usunąć zbędne elementy z pkt. 2, a następnie go wczytać. Choć przy braku zmian też wszystko będzie działało prawidłowo jak do tej pory.
+5. Dodano dodatkowe if statement do taskDragLeaveHandler wykorzystujące szukanie regexa w event.relatedTarget.classList.value, żeby sprawdzić, czy dragLeave następuje wewnątrz taska. Jeśli test da false, to wtedy po przejściu np. na nazwę listy czy gdzieś poza listę zniknie klasa .draggedOverItem z taska, na którym do tej pory zostawała i task był oznaczony jako draggedOver do momentu oznaczenia tak innego taska.
+Z kolei drugi if działa w sposób opisany w v1.1.0, czyli tylko z setTimeout taskDragLeaveHandler nie czyści od razu klasy draggedOverItem jeśli dragOver event jest odpalany w obrębie jednego taska. Bez setTimeout elementy draggedOver nie zmieniały w ogóle koloru.
 
 ++++++++++++++++++++++++
 

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ToDoContext } from '../../contexts/ToDoContext';
 import './scss/Tasks.css';
-import { taskDragStartHandler, taskDragEndHandler, taskDragOverHandler, taskDragLeaveHandler, taskDropHandler } from './tasksDragAndDrop';
+import { taskDragStartHandler, clearDragAndDropStates, taskDragOverHandler, taskDragLeaveHandler, taskDropHandler } from './tasksDragAndDrop';
 
 const Task = (task) => {
   const { myTaskLists, setMyTaskLists } = useContext(ToDoContext);
@@ -70,7 +70,7 @@ const Task = (task) => {
   };
 
   return (
-    <div className={task.taskClasses.join(' ')} draggable="true" onDragStart={() => taskDragStartHandler(task.taskId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => taskDragEndHandler(myTaskLists, setMyTaskLists)} onDragOver={() => taskDragOverHandler(task.taskId, event, myTaskLists)} onDragLeave={() => taskDragLeaveHandler(task.taskId, myTaskLists, setMyTaskLists)} onDrop={() => taskDropHandler(myTaskLists, setMyTaskLists)}>
+    <div className={task.taskClasses.join(' ')} draggable="true" onDragStart={() => taskDragStartHandler(task.taskId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => clearDragAndDropStates(myTaskLists, setMyTaskLists)} onDragOver={() => taskDragOverHandler(task.taskId, event, myTaskLists)} onDragLeave={() => taskDragLeaveHandler(task.taskId, event, myTaskLists, setMyTaskLists)} onDrop={() => taskDropHandler(event, myTaskLists, setMyTaskLists)}>
       <div className="taskControlBtns">
         <input className="defaultButton prioBtn" type="button" value="P" onClick={() => prioTask(task.taskId)} />
         <input className="defaultButton taskInProgressBtn" type="button" value="&#128336;" onClick={() => taskInProgress(task.taskId)} />

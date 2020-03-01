@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './scss/ToDoLists.css';
 import { ToDoContext } from '../../contexts/ToDoContext';
 import Task from '../tasks/Tasks';
-import { listDragStartHandler, listDragEndHandler, listDragOverHandler, listDragLeaveHandler, listDropHandler } from './listsDragAndDrop';
+import { listDragStartHandler, clearDragAndDropStates, listDragOverHandler, listDragLeaveHandler, listDropHandler } from './listsDragAndDrop';
 
 const ToDoLists = () => {
   const { myTaskLists, setMyTaskLists } = useContext(ToDoContext);
@@ -11,8 +11,6 @@ const ToDoLists = () => {
     taskId: new Date().getTime(),
     taskContent: '',
     taskClasses: ['taskItem', 'spanEdit--task'],
-    isTaskDragged: false,
-    isTaskDraggedOver: false,
   };
 
   const addTaskFirst = (listId) => {
@@ -71,7 +69,7 @@ const ToDoLists = () => {
   };
 
   const taskLists = myTaskLists.map(list => (
-    <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => listDragEndHandler(myTaskLists, setMyTaskLists)} onDragOver={() => listDragOverHandler(list.listId, event, myTaskLists)} onDragLeave={() => listDragLeaveHandler(list.listId, myTaskLists, setMyTaskLists)} onDrop={() => listDropHandler(myTaskLists, setMyTaskLists)}>
+    <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => clearDragAndDropStates(myTaskLists, setMyTaskLists)} onDragOver={() => listDragOverHandler(list.listId, event, myTaskLists)} onDragLeave={() => listDragLeaveHandler(list.listId, myTaskLists)} onDrop={() => listDropHandler(event, myTaskLists, setMyTaskLists)}>
       <div className={list.listClasses.join(' ')}>
         <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list.listId)} />
         <input type="button" className="defaultButton addTaskBtn addTaskBtn--last" value="&#x2A71;" onClick={() => addTaskLast(list.listId)} />
