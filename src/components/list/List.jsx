@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import './scss/ToDoLists.css';
+import './scss/List.css';
 import { ToDoContext } from '../../contexts/ToDoContext';
-import Task from '../tasks/Tasks';
+import Task from '../task/Task';
 import { listDragStartHandler, clearDragAndDropStates, listDragOverHandler, listDragLeaveHandler, listDropHandler } from './listsDragAndDrop';
 
-const ToDoLists = () => {
+const List = (list) => {
   const { myTaskLists, setMyTaskLists } = useContext(ToDoContext);
 
   const newTask = {
@@ -68,7 +68,7 @@ const ToDoLists = () => {
     }
   };
 
-  const taskLists = myTaskLists.map(list => (
+  return (
     <div className="ToDoList__container" draggable="true" key={list.listId} onDragStart={() => listDragStartHandler(list.listId, event, myTaskLists, setMyTaskLists)} onDragEnd={() => clearDragAndDropStates(myTaskLists, setMyTaskLists)} onDragOver={() => listDragOverHandler(list.listId, event, myTaskLists)} onDragLeave={() => listDragLeaveHandler(list.listId, myTaskLists)} onDrop={() => listDropHandler(event, myTaskLists, setMyTaskLists)}>
       <div className={list.listClasses.join(' ')}>
         <input type="button" className="defaultButton addTaskBtn addTaskBtn--first" value="&#x02A72;" onClick={() => addTaskFirst(list.listId)} />
@@ -84,10 +84,7 @@ const ToDoLists = () => {
         ))}
       </div>
     </div>
-  ));
-  return (
-    taskLists
   );
 };
 
-export default ToDoLists;
+export default List;
