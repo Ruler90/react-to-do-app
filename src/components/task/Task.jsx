@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ToDoContext } from '../../contexts/ToDoContext';
-import './scss/Tasks.css';
+import './scss/Task.css';
 import { taskDragStartHandler, clearDragAndDropStates, taskDragOverHandler, taskDragLeaveHandler, taskDropHandler } from './tasksDragAndDrop';
 
 const Task = (task) => {

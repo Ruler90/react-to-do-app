@@ -62,7 +62,9 @@ state = {
 
 # Refactor
 
-- Takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań.
+- Takie rozbicie Tasks i Lists na komponenty, żeby w React Dev Tools były widoczne listy na wzór zadań:
+  - połączyć wszystko w pliku ToDoLists.jsx
+  - poprawić nazwę pliku ze stylami, importować go w pliku Lists.jsx i usunąć import z ToDoLists.jsx
 
 - Zmiana auto-save z pojedynczych funkcji -> useEffect zależne od zmian w myTaskLists + usunięcie localStorage.setItem. Pamiętać, że niektóre eventy d'n'd mają ustawione setMyTasks, więc do LS mogą się zapisywać także tymaczasowe states z d'n'd, a tego lepiej uniknąć.
 
@@ -74,6 +76,18 @@ state = {
 ###############################
 
 # Changelog
+
+++++++++++++++++++++++++
+
+### v1.1.3 - 01.03.2020
+
+1. Stworzenie oddzielnego komponentu List.jsx.
+
+- Do tej pory był komponent ToDoLists.jsx oraz Tasks.jsx. Ten pierwszy generował listy na podstawie array.map i do tego komponentu był przekazany Tasks.jsx, który generował taski na konkretnej liście. W devtools efekt był taki, że były pokazane same taski z ich keys, choć na działanie apki nie miało to wpływu.
+
+- Teraz po rozdzieleniu mamy komponent Task.jsx, który jest przekazywany do komponentu List.jsx, który z kolei jest przekazywany do ToDoLists.jsx. Tam za pomocą array.map są tworzone listy -> lists jest przekazywane do List.jsx, gdzie z kolei jest array.map dla tasków i tam taski otrzymują tasks należące do konkretnej list.
+
+2. Zmiana nazw plików i folderów lists i tasks na l.poj. -> list i task i poprawienie importów.
 
 ++++++++++++++++++++++++
 
