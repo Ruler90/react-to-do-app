@@ -4,26 +4,34 @@ export const taskDragStartHandler = (taskId, event, myTaskLists, setMyTaskLists)
   click.mousedown = false;
   event.dataTransfer.setData('text', taskId);
   const newListsArray = myTaskLists.slice();
-  const draggedTask = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
-  draggedTask.isTaskDragged = true;
+  const draggedTaskItem = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
+  draggedTaskItem.draggedTask = true;
   setMyTaskLists(newListsArray);
 };
 
-export const taskDragEndHandler = (myTaskLists, setMyTaskLists) => {
+export const clearDragAndDropStates = (myTaskLists, setMyTaskLists) => {
   const newListsArray = myTaskLists.map(list => {
     const listDragStateReset = list;
     listDragStateReset.tasks.map(task => {
       const taskDragStateReset = task;
-      taskDragStateReset.isTaskDragged = false;
-      taskDragStateReset.isTaskDraggedOver = false;
+      if (taskDragStateReset.draggedTask) {
+        delete taskDragStateReset.draggedTask;
+      }
+      if (taskDragStateReset.draggedOverTask) {
+        delete taskDragStateReset.draggedOverTask;
+      }
       if (taskDragStateReset.taskClasses.find(el => el === 'draggedOverItem')) {
         const classToRemoveIndex = taskDragStateReset.taskClasses.findIndex(el => el === 'draggedOverItem');
         taskDragStateReset.taskClasses.splice(classToRemoveIndex, 1);
       }
       return taskDragStateReset;
     });
-    listDragStateReset.isListDragged = false;
-    listDragStateReset.isListDraggedOver = false;
+    if (listDragStateReset.draggedList) {
+      delete listDragStateReset.draggedList;
+    }
+    if (listDragStateReset.draggedOverList) {
+      delete listDragStateReset.draggedOverList;
+    }
     return listDragStateReset;
   });
   setMyTaskLists(newListsArray);
@@ -32,40 +40,47 @@ export const taskDragEndHandler = (myTaskLists, setMyTaskLists) => {
 export const taskDragOverHandler = (taskId, event, myTaskLists) => {
   event.preventDefault();
   const newListsArray = myTaskLists.slice();
-  const draggedOverTask = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
-  draggedOverTask.isTaskDraggedOver = true;
-  if (!draggedOverTask.taskClasses.find(el => el === 'draggedOverItem')) {
-    draggedOverTask.taskClasses.push('draggedOverItem');
+  const draggedOverTaskItem = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
+  draggedOverTaskItem.draggedOverTask = true;
+  if (!draggedOverTaskItem.taskClasses.find(el => el === 'draggedOverItem')) {
+    draggedOverTaskItem.taskClasses.push('draggedOverItem');
   }
 };
 
-export const taskDragLeaveHandler = (taskId, myTaskLists, setMyTaskLists) => {
+export const taskDragLeaveHandler = (taskId, event, myTaskLists, setMyTaskLists) => {
   const newListsArray = myTaskLists.slice();
   const dragLeftTask = newListsArray.find(list => list.tasks.some(task => task.taskId === taskId)).tasks.find(task => task.taskId === taskId);
+  if (dragLeftTask.draggedOverTask) {
+    delete dragLeftTask.draggedOverTask;
+  }
   if (dragLeftTask.taskClasses.includes('draggedOverItem')) {
-    dragLeftTask.isTaskDraggedOver = false;
     const classToRemoveIndex = dragLeftTask.taskClasses.findIndex(el => el === 'draggedOverItem');
     setTimeout(() => {
       dragLeftTask.taskClasses.splice(classToRemoveIndex, 1);
     }, 50);
   }
+  if (!(/(taskControlBtns)|(defaultButton)|(taskItem)|(editableSpan--task)/.test(event.relatedTarget.classList.value)) && dragLeftTask.taskClasses.includes('draggedOverItem')) {
+    const classToRemoveIndex = dragLeftTask.taskClasses.findIndex(el => el === 'draggedOverItem');
+    dragLeftTask.taskClasses.splice(classToRemoveIndex, 1);
+  }
   setMyTaskLists(newListsArray);
 };
 
-export const taskDropHandler = (myTaskLists, setMyTaskLists) => {
+export const taskDropHandler = (event, myTaskLists, setMyTaskLists) => {
+  event.preventDefault();
   const newListsArray = myTaskLists.slice();
 
   // drop task on other task
-  if (newListsArray.find(list => list.tasks.some(task => task.isTaskDragged === true)) && newListsArray.find(list => list.tasks.some(task => task.isTaskDraggedOver === true))) {
-    const droppedTask = newListsArray.find(list => list.tasks.some(task => task.isTaskDragged === true)).tasks.find(task => task.isTaskDragged === true);
-    const droppedTaskIndex = newListsArray.find(list => list.tasks.some(task => task.isTaskDragged === true)).tasks.findIndex(task => task.isTaskDragged === true);
-    const droppedTaskFromListIndex = newListsArray.findIndex(list => list.tasks.some(task => task.isTaskDragged === true));
-    const droppedTaskOnListIndex = newListsArray.findIndex(list => list.isListDraggedOver === true);
-    const droppedTaskOnTaskIndex = newListsArray.find(list => list.tasks.some(task => task.isTaskDraggedOver === true)).tasks.findIndex(task => task.isTaskDraggedOver === true);
+  if (newListsArray.find(list => list.tasks.some(task => task.draggedTask)) && newListsArray.find(list => list.tasks.some(task => task.draggedOverTask))) {
+    const draggedTaskItem = newListsArray.find(list => list.tasks.some(task => task.draggedTask)).tasks.find(task => task.draggedTask);
+    const draggedTaskIndex = newListsArray.find(list => list.tasks.some(task => task.draggedTask)).tasks.findIndex(task => task.draggedTask);
+    const draggedTaskFromListIndex = newListsArray.findIndex(list => list.tasks.some(task => task.draggedTask));
+    const droppedTaskOnListIndex = newListsArray.findIndex(list => list.draggedOverList);
+    const droppedTaskOnTaskIndex = newListsArray.find(list => list.tasks.some(task => task.draggedOverTask)).tasks.findIndex(task => task.draggedOverTask);
 
-    newListsArray[droppedTaskFromListIndex].tasks.splice(droppedTaskIndex, 1);
-    newListsArray[droppedTaskOnListIndex].tasks.splice(droppedTaskOnTaskIndex, 0, droppedTask);
-    taskDragEndHandler(myTaskLists, setMyTaskLists);
+    newListsArray[draggedTaskFromListIndex].tasks.splice(draggedTaskIndex, 1);
+    newListsArray[droppedTaskOnListIndex].tasks.splice(droppedTaskOnTaskIndex, 0, draggedTaskItem);
+    clearDragAndDropStates(myTaskLists, setMyTaskLists);
     setMyTaskLists(newListsArray);
     localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
   }

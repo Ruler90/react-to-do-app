@@ -14,8 +14,6 @@ const MainControls = () => {
         listId: new Date().getTime(),
         listName: dateInput + ' (' + dayName[realDate.getDay()] + ')',
         listClasses: ['ToDoList__nameBar'],
-        isListDragged: false,
-        isListDraggedOver: false,
         tasks: [],
       };
       const newListsArray = [...myTaskLists, list];
