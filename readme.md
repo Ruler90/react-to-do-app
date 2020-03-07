@@ -1,6 +1,25 @@
 # React To Do App
 
-1. Choose date and add task list.
+Improved version of my [previous Vanilla JS To Do App](https://github.com/Ruler90/to-do-app-1-js) refactored with React and after some time refactored again (class components -> stateless functional components, context and hooks).
+
+You can think of it as of offline Trello with just basic functions.
+
+## Quick start:
+
+1. Clone this repo and make it your local repo.
+
+2. Use ```npm install``` to install all dependencies listed in package.json.
+
+3. To start webpack-dev-server, use ```npm run start```
+To bundle, minify and uglify all js/jsx and css code, use ```npm run build```
+
+4. Create ESLint configuration file (I'm using airbnb styleguide).
+
+## Features:
+
+0. You can check it out as a [Chrome Extension](https://chrome.google.com/webstore/detail/to-do-app/khekhpfpmeododajpdckhknoaeibcicf).
+
+1. Choose date and add list.
 2. Use one of the buttons to create task on the list - first button creates task as the first task on the list and the second button as the last task on the list.
 3. You can change list's name by clicking on it, typying new name and saving it by clicking anywhere or by hitting enter.
 4. If you want to delete list, you have to confirm that action.

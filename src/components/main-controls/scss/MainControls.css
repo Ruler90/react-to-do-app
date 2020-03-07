@@ -1,3 +1,9 @@
+nav {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+}
+
 .mainControls {
   background: #a3ccf4;
   margin: 10px auto;
@@ -18,22 +24,6 @@
 @media screen and (max-width: 550px) {
   .mainControls {
     max-width: 180px;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  .mainControls {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 30%;
-  }
-}
-
-@media screen and (min-width: 1150px) {
-  .mainControls {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 35%;
   }
 }
 

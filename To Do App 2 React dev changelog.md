@@ -1,41 +1,45 @@
 
 # Struktura state v1
 
+```json
 state = {
     lists: [
-      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
-        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
+      {listId: 1, listName: '2019-12-02 (Mon)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
+        { taskId: 132352, taskContent: 'some task', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 256573, taskContent: 'another task', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 323278, taskContent: 'and another task', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
       ]},
-      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
-        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
-        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
+      {listId: 2, listName: '2019-12-03 (Tue)', listClasses: ['ToDoList__nameBar'], isListDragged: false, isListDraggedOver: false, tasks: [
+        { taskId: 178992, taskContent: 'other task', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 257321, taskContent: 'next task', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false },
+        { taskId: 309345, taskContent: 'some other task', taskClasses: ['taskItem'], isTaskDragged: false, isTaskDraggedOver: false }
       ]}
     ]
   }
+```
 
 ###############################
 
 # Struktura state v2
 
+```json
 state = {
     lists: [
-      {listId: 1, listName: '2019-12-02 (pon)', listClasses: ['ToDoList__nameBar'],
+      {listId: 1, listName: '2019-12-02 (Mon)', listClasses: ['ToDoList__nameBar'],
       tasks: [
-        { taskId: 132352, taskContent: 'jakieś zadanie', taskClasses: ['taskItem'] },
-        { taskId: 256573, taskContent: 'kolejne zadanie', taskClasses: ['taskItem'] },
-        { taskId: 323278, taskContent: 'jeszcze jedno zadanie', taskClasses: ['taskItem'] }
+        { taskId: 132352, taskContent: 'some task', taskClasses: ['taskItem'] },
+        { taskId: 256573, taskContent: 'another task', taskClasses: ['taskItem'] },
+        { taskId: 323278, taskContent: 'and another task', taskClasses: ['taskItem'] }
       ]},
-      {listId: 2, listName: '2019-12-03 (wt)', listClasses: ['ToDoList__nameBar'],
+      {listId: 2, listName: '2019-12-03 (Tue)', listClasses: ['ToDoList__nameBar'],
       tasks: [
-        { taskId: 178992, taskContent: 'inne zadanie', taskClasses: ['taskItem'] },
-        { taskId: 257321, taskContent: 'następne zadanie', taskClasses: ['taskItem'] },
-        { taskId: 309345, taskContent: 'inne trzecie zadanie', taskClasses: ['taskItem'] }
+        { taskId: 178992, taskContent: 'other task', taskClasses: ['taskItem'] },
+        { taskId: 257321, taskContent: 'next task', taskClasses: ['taskItem'] },
+        { taskId: 309345, taskContent: 'some other task', taskClasses: ['taskItem'] }
       ]}
     ]
   }
+```
 
 ###############################
 
@@ -45,7 +49,7 @@ state = {
 
 - Nadawanie listom klasy z opacity przy dragOver i usuwaniu jej przy dragEnd, dragLeave i drop. Tylko czy warto z tym kombinować? Przy przenoszeniu list trudno o pomyłkę, a zabawa z klasami to dodatkowe generowanie dużej ilości eventów.
 
-- Na średnich ekranach listy układają się w dwie kolumny. Wygląda to średnio, jeśli jedna lista ma np. 2 zadania, a druga 10 -> jest wtedy sporo pustej przestrzeni. Dla średnich ekranów można dodać określoną max-height dla list i dodać im overflow, żeby pojawiał się scroll w razie potrzeby, tak jak pojawia się na dużych ekranach. Zmienić wtedy też stylowanie scrolla, bo teraz jest tylko w MQ dla dużych ekranów. Na razie nie zmieniam tego, bo nigdy nie korzystałem z listy na średnim ekranie.
+- Na średnich ekranach listy układają się w dwie kolumny. Wygląda to średnio, jeśli jedna lista ma np. 2 zadania, a druga 10 -> jest wtedy sporo pustej przestrzeni. Dla średnich ekranów można dodać określoną max-height dla list i dodać im overflow, żeby pojawiał się scroll w razie potrzeby, tak jak pojawia się na dużych ekranach. Zmienić wtedy też stylowanie scrolla, bo teraz jest tylko w MQ dla dużych ekranów. Na razie nie zmieniam tego, bo nigdy nie korzystano z listy na średnim ekranie.
 
 - Domyślnie nazwy list są krótkie (daty i dni), ale można wpisać dowolną liczbę znaków. Buttony mają position: absolute i jeśli zostanie wpisana długa nazwa, to może schować się pod buttonami. Można nadać taką width spanowi, żeby była widoczna cała nazwa. Ewentualnie można użyć innego pozycjonowania - span pośrodku, buttony dodawania po lewej, a button usuwania po prawej.
 
@@ -62,21 +66,19 @@ state = {
 
 ###############################
 
-# Chrome Extension
-
-- zbundlowanie kodu z odpowiednim configiem Webpacka i Babela i wrzucenie do Chrome Store
-
-###############################
-
 # Changelog
 
 ++++++++++++++++++++++++
 
-### v1.1.4 - 01.03.2020
+### v1.1.5 - 01.03.2020, 02.03.2020, 04.03.2020
 
-Rozbudowanie fn loadFromFile o setTimeout z dwoma alertami, żeby user wiedział, co się dzieje. setTimeout jest po to, żeby najpierw na ekranie pojawiła się zmiana, a dopiero potem komunikat (a w przypadku złego pliku, żeby w ogóle komunikat się pokazał).
+1. Rozbudowanie fn loadFromFile o setTimeout z dwoma alertami, żeby user wiedział, co się dzieje. setTimeout jest po to, żeby najpierw na ekranie pojawiła się zmiana, a dopiero potem komunikat (a w przypadku złego pliku, żeby w ogóle komunikat się pokazał).
   - Jeśli wczytamy prawidłowy plik, to pojawi się info, że plik został załadowany i że dopiero po dokonaniu jakichkolwiek zmian nastąpi zapis do LS.
   - Jeśli wczytamy nieprawidłowy plik, to będzie pusty ekran i pojawi się info, że nie można załadować pliku i żeby odświeżyć stronę.
+
+2. Ustawienie position: sticky, left: 0 dla nav i usunięcie position oraz left z klasy .mainControls. Dzięki temu element MainControls jest widoczny bez względu na to, jak daleko przescrollujemy w prawo. Wcześniej nie zwrócono na to uwagi, ponieważ dopiero przy sporej ilości list MainControls zaczynają "uciekać" z viewportu.
+
+3. Przygotowanie Chrome Extension.
 
 ++++++++++++++++++++++++
 
@@ -100,8 +102,8 @@ Dalsze zmiany w drag and drop lists i tasks:
 2. Usunięcie ze state oraz z tworzenia nowych list i tasków key: value pairs -> isListDragged, isListDraggedOver, isTaskDragged, isTaskDraggedOver.
 3. Zastąpienie powyższych tymczasowymi key: value pairs, które nie będą przechowywane w state i będą tylko dodawane/usuwane podczas drag and drop -> draggedList, draggedOverList, draggedTask, draggedOverTask.
 4. Jeśli ktoś korzysta z tej listy, to warto dla porządku stworzyć plik z backupem, edytować go i usunąć zbędne elementy z pkt. 2, a następnie go wczytać. Choć przy braku zmian też wszystko będzie działało prawidłowo jak do tej pory.
-5. Dodano dodatkowe if statement do taskDragLeaveHandler wykorzystujące szukanie regexa w event.relatedTarget.classList.value, żeby sprawdzić, czy dragLeave następuje wewnątrz taska. Jeśli test da false, to wtedy po przejściu np. na nazwę listy czy gdzieś poza listę zniknie klasa .draggedOverItem z taska, na którym do tej pory zostawała i task był oznaczony jako draggedOver do momentu oznaczenia tak innego taska.
-Z kolei drugi if działa w sposób opisany w v1.1.0, czyli tylko z setTimeout taskDragLeaveHandler nie czyści od razu klasy draggedOverItem jeśli dragOver event jest odpalany w obrębie jednego taska. Bez setTimeout elementy draggedOver nie zmieniały w ogóle koloru.
+5. Dodano dodatkowe if statement do taskDragLeaveHandler wykorzystujące szukanie regexa w event.relatedTarget.classList.value, żeby sprawdzić, czy dragLeave następuje wewnątrz taska. Jeśli test da false, to wtedy po przejściu np. na nazwę listy czy gdzieś poza listę zniknie klasa .draggedOverItem z taska, na którym do tej pory zostawała i task był oznaczony jako draggedOver do momentu oznaczenia tak innego taska.  
+Z kolei drugi if działa w sposób opisany w v1.1.0, czyli tylko z setTimeout taskDragLeaveHandler nie czyści od razu klasy draggedOverItem, jeśli dragOver event jest odpalany w obrębie jednego taska. Bez setTimeout elementy draggedOver nie zmieniały w ogóle koloru.
 
 ++++++++++++++++++++++++
 
@@ -172,11 +174,11 @@ Refactor kodu:
 
 ### v1.0.8 - 20.02.2020, 21.02.2020
 
-0. Poprzednia wersja była z 02.01.2020, a nie 2019, jak błędnie podano.
+0. Poprzednia wersja była z 02.01.2020, a nie 2019, jak błędnie podano przy commicie.
 
 Refactor kodu:
 
-1. Przygotowanie nowych komponentów .jsx z logiką ze poprzednich komponentów .js.
+1. Przygotowanie nowych komponentów .jsx z logiką z poprzednich komponentów .js.
 
 2. Zmiana eol z CRLF na LF.
 
@@ -239,7 +241,7 @@ event.dataTransfer.setData('text', taskId);
 Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 - Teraz jest jeden dodający zadanie na początku listy (addTaskFirst) oraz drugi - dodający zadanie na końcu (addTaskLast).
 - Dla obu buttonów zostały dodane nowe klasy css z pozycjonowaniem.
-- Buttony jako value mają ustawione znaki: &#x02A72; oraz &#x2A71; - każdy z nich jest traktowany jako 1 znak, dzięki czemu nie były wymagane żadne dodatkowe zmiany wyglądu buttonów. Jednocześnie są to najbardziej pasujące znaki, jakie znalazłem, które mogłyby wizualizować dodawanie zadania na górze i na dole.
+- Buttony jako value mają ustawione znaki: &#x02A72; oraz &#x2A71; - każdy z nich jest traktowany jako 1 znak, dzięki czemu nie były wymagane żadne dodatkowe zmiany wyglądu buttonów. Jednocześnie są to najbardziej pasujące znaki, jakie znaleziono i które mogłyby wizualizować dodawanie zadania na górze i na dole.
 
 ++++++++++++++++++++++++
 
@@ -272,9 +274,9 @@ Dodanie drugiego buttona odpowiadającego za dodawanie zadań do listy:
 ### v1.0.0 - 13.12.2019
 
 Fn saveToLS - zapisywanie i pobieranie state z Local Storage:
-- W index.js dodany skrypt przez renderem Reacta, który sprawdza, czy w LS istnieje element myReactTasks. Jeśli nie, to tworzy pusty element. Gdyby nie było żadnego, to apka w ogóle się nie wyrenderuje (nawet MainControls).
-- Funkcje apki, które zmieniają state w istotny sposób dostały
-localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)));
+- W index.js dodany skrypt przed renderem Reacta, który sprawdza, czy w LS istnieje element myReactTasks. Jeśli nie, to tworzy pusty element. Gdyby nie było żadnego, to apka w ogóle się nie wyrenderuje (nawet MainControls).
+- Funkcje apki, które zmieniają state w istotny sposób dostały  
+```localStorage.setItem('myReactTasks', (JSON.stringify(newListsArray)))```  
 Zapis do LS następuje po dodaniu listy, po edycji nazwy listy, po usunięciu listy, po dodaniu zadania, po edycji treści zadania, po ustawieniu statusu zadania (prio i IP), po usunięciu zadania, przy drop zadania oraz listy.
 - Nie dodawano tego przy drag eventach, ponieważ dla usera najistotniejszy jest drop, który zmieni pozycję listy lub zadania, a nie sam fakt, że element jest w trakcie przenoszenia. 
 - Tak jak poprzednio nie dodano saveToLS dla akcji wczytania listy z pliku - na wszelki wypadek, gdyby plik był błędny. Po wczytaniu pliku trzeba wykonać jakąś akcję, która wiąże się z zapisem do LS.
@@ -291,14 +293,14 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 1. Fn dragAndDrop dla Tasks i Lists:
   - Taski posiadają w state: isTaskDragged oraz isTaskDraggedOver (oba domyślnie false).
-  - Listy posiadając w state: isListDragged oraz isListDraggedOver (oba domyślnie false).
+  - Listy posiadają w state: isListDragged oraz isListDraggedOver (oba domyślnie false).
   - Przy konkretnych eventach odpowiednie elementy otrzymują true przy powyższych, czyli np. przenoszone zadanie ma isTaskDragged=true, zadanie, nad którym je trzymamy ma isTaskDraggedOver=true, a lista, na której jest to zadanie ma isListDraggedOver=true.
   - Przy onDrop zbierane są informacje o elementach (która lista, który index, jaki dokładnie element) i zapisywane do zmiennych. Potem po spełnieniu warunków z określonych if statements jest wykonywana metoda splice, która wycina przenoszony element z jednego miejsca i wstawia w drugim modyfikując wszystko w state. Jednocześnie wszystkie parametry isDragged i isDraggedOver są ustawiane na false.
-  - Ostatecznie ustawiam jedną fn dropHandler, która jest połączeniem tej dla tasków i tej dla list. Dalej zbierane są informacje o stanach obiektów do zmiennych i potem na podstawie odpowiednich if statements wybierane jest odpowiednie działanie: przeniesienie taska na miejsce innego taska lub dodanie taska na końcu listy jeśli drop był na liście, a nie tasku. Jeśli będą się przenosiły po 2 zadania naraz, to if statements mają złe wykluczenia.
-  - Można też zamieniać miejscami list - nie ma znaczenia, czy lista zostanie przeniesiona na inną listę czy na task na innej liście.
+  - Ostatecznie napisano jedną fn dropHandler, która jest połączeniem tej dla tasków i tej dla list. Dalej zbierane są informacje o stanach obiektów do zmiennych i potem na podstawie odpowiednich if statements wybierane jest odpowiednie działanie: przeniesienie taska na miejsce innego taska lub dodanie taska na końcu listy jeśli drop był na liście, a nie tasku. Jeśli będą się przenosiły po 2 zadania naraz, to if statements mają złe wykluczenia.
+  - Można też zamieniać miejscami listy - nie ma znaczenia, czy lista zostanie przeniesiona na inną listę czy na task na innej liście.
   - Jeśli task lub lista zostaną upuszczone poza obszarem jakiejkolwiek listy, to nic się nie wydarzy.
 
-2. Zmieniłem wysokość listy ze 180px na 50px - jeśli nie ma tam zadań, to zostaje sam pasek z nazwą i buttonami dodawania/usuwania. Wygląda to lepiej niż puste pole. Dopasowałem też wysokość mainContainer i ToDoList__container do ekranu.
+2. Zmieniono wysokość listy ze 180px na 50px - jeśli nie ma tam zadań, to zostaje sam pasek z nazwą i buttonami dodawania/usuwania. Wygląda to lepiej niż puste pole. Dopasowano też wysokość mainContainer i ToDoList__container do ekranu.
 
 ++++++++++++++++++++++++
 
@@ -340,7 +342,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 2. Utworzono funkcję dodawania nowej listy w App.js i podpięto ją do odpowiedniego buttona w MainControls.js.
 
-3. Utworzono funkcję usuwania dowolnej listy i podpięto ją do odpowiedniego buttona w MainControls.js.
+3. Utworzono funkcję usuwania dowolnej listy i podpięto ją do odpowiedniego buttona w ToDoLists.js.
 
 ++++++++++++++++++++++++
 
@@ -356,7 +358,7 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 ### v0.2.0 - 06.12.2019
 
-1. Przeniesiono <div className="mainContainer"> z index.html do App.js oraz dodano tam tagi <main></main>.
+1. Przeniesiono ```<div className="mainContainer">``` z index.html do App.js oraz dodano tam tagi ```<main></main>```.
 
 2. Stworzenie komponentu ToDoLists, który zawiera kontener z listą zadań, belkę z nazwą, button dodawania nowego zadania do listy i button usunięcia całej listy. Zgodnie z wcześniejszym opisem - zmieniła się budowa kontenera. Jednocześnie zmieniły się też nazwy klas, które były wykorzystywane przy poprzedniej, nie-Reactowej To Do App:
     - day__Container -> ToDoList__container
@@ -383,6 +385,6 @@ Dodano fn dragScroll - bez dodatkowych modyfikacji została po prostu przeniesio
 
 2. Stworzenie pierwszego komponentu - MainControls, przekopiowanie styli do niego, przerobienie ich na scss i importowanie wyjściowego pliku .css w komponencie.
 
-3. Dodanie <div id="mainContainer"></div> do index.html.
+3. Dodanie ```<div id="mainContainer"></div>``` do index.html.
 
 4. Dodanie styli dla body i mainContainer w App.css.
